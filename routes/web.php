@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\ThemeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/', [ThemeController::class, 'index'])
+    ->name('/');
+
+Route::get('/themes/show/{id}', [ThemeController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('themes.show');
+
