@@ -3,6 +3,14 @@ body {
     height: 100%;
 }
 
+a {
+    color: #005662;
+    text-decoration: none;
+    list-style-type: none;
+    font-size: 20px;
+    font-family: monospace;
+}
+
 .wrapper {
     min-height: 100%;
     display: flex;

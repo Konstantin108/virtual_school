@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\ThemeController;
+use \App\Http\Controllers\QuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,12 @@ Route::get('/', [ThemeController::class, 'index'])
 Route::get('/themes/show/{id}', [ThemeController::class, 'show'])
     ->where('id', '\d+')
     ->name('themes.show');
+
+Route::get('/getQuest/{id}', [QuestController::class, 'getQuest'])
+    ->where('id', '\d+')
+    ->name('getQuest');
+
+Route::get('getNextQuest/{id}/{questNumber}', [QuestController::class, 'getNextQuest'])
+    ->where(['id' => '\d+', 'questNumber' => '\d+'] )
+    ->name('getNextQuest');
 

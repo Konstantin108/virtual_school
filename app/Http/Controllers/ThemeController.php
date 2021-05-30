@@ -7,23 +7,25 @@ use Illuminate\Http\Request;
 
 class ThemeController extends Controller
 {
-
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $themes = (new Theme())->getThemes();
+        $themes = Theme::select([
+            'id',
+            'title',
+            'created_at'
+        ])->get();
         return view('index', ['themes' => $themes]);
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(int $id)
     {
-//        $theme = (new Theme())->getThemeById($id);
         $theme = Theme::findOrFail($id);
         return view('theme', ['theme' => $theme]);
     }

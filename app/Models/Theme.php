@@ -2,39 +2,49 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * App\Models\Theme
+ *
+ * @property int $id
+ * @property string|null $title
+ * @property string|null $text
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Theme newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Theme newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Theme query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Theme whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Theme whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Theme whereText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Theme whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Theme whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Theme extends Model
 {
-    use HasFactory;
-
+    /**
+     * @var string
+     */
     protected $table = "themes";
 
-    public function getThemes(): Collection
-    {
-        return \DB::table($this->table)->get();
-    }
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'title',
+        'text',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
-     * @param int $id
+     * @return HasMany
      */
-    public function getThemeById(int $id)
+    public function quest(): HasMany
     {
-        return \DB::selectOne("
-            SELECT
-                 id,
-                 title,
-                 text,
-                 created_at,
-                 updated_at
-            FROM
-                themes
-            WHERE
-                id = :id
-            ",
-            ['id' => $id]
-        );
+        return $this->hasMany(Quest::class, 'theme_id', 'id');
     }
 }
