@@ -12,11 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
-    return view('welcome');
-});
-
+    return view('home')->name('home');
+});*/
+Route::view('/', 'home')->name('home');
+/* временные маршруты без запроса к БД */
+Route::view('/stats', 'stats')->middleware(['auth'])->name('stats');
+Route::view('/rating', 'rating')->name('rating');
+/*  */
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
