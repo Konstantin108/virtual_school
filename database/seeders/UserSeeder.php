@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'admin',
+                'name' => 'Alex',
                 'email' => 'admin@admin.ru',
                 'email_verified_at' => now(),
                 'password' => Hash::make('123'), // password
@@ -26,20 +26,20 @@ class UserSeeder extends Seeder
                 'is_admin' => true,
             ],
             [
-                'name' => 'user1',
+                'name' => 'Kostya',
                 'email' => 'user1@user1.ru',
                 'email_verified_at' => now(),
                 'password' => Hash::make('123'), // password
                 'remember_token' => Str::random(10),
-                'is_admin' => false,
+                'is_admin' => true,
             ],
             [
-                'name' => 'user2',
+                'name' => 'Maxim',
                 'email' => 'user2@user2.ru',
                 'email_verified_at' => now(),
                 'password' => Hash::make('123'), // password
                 'remember_token' => Str::random(10),
-                'is_admin' => false,
+                'is_admin' => true,
             ],
             [
                 'name' => 'user3',
