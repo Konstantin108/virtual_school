@@ -30,7 +30,7 @@ Route::get('/getQuest/{id}', [QuestController::class, 'getQuest'])
     ->where('id', '\d+')
     ->name('getQuest');
 
-Route::get('getNextQuest/{id}/{questNumber}', [QuestController::class, 'getNextQuest'])
+Route::post('getNextQuest/{id}/{questNumber}', [QuestController::class, 'getNextQuest'])
     ->where(['id' => '\d+', 'questNumber' => '\d+'] )
     ->name('getNextQuest');
 

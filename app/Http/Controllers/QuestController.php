@@ -11,9 +11,10 @@ class QuestController extends Controller
 
     /**
      * @param int $themeId
+     * @param Quest $quest
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function getQuest(int $themeId)
+    public function getQuest(int $themeId, Quest $quest)
     {
         $questions = Quest::where([
             ['theme_id', $themeId],
@@ -21,7 +22,10 @@ class QuestController extends Controller
         ])
             ->with('theme')
             ->get();
-        return view('quest', ['questions' => $questions]);
+        return view('quest', [
+            'questions' => $questions,
+            'quest' => $quest
+        ]);
     }
 
     /**
