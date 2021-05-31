@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quest;
+use Illuminate\Http\Request;
 
 class QuestController extends Controller
 {
     protected $questNumber = 1;
     protected $score = 0;
+    protected $answer = '';
+    protected $correctAnswer = '';
 
     /**
      * @param int $themeId
@@ -31,10 +34,11 @@ class QuestController extends Controller
     /**
      * @param int $themeId
      * @param int $nextQuestNumber
-     * @param string $thisAnswer
+     * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\Response
      */
-    public function getNextQuest(int $themeId, int $nextQuestNumber)
+    public function getNextQuest(Request $request, int $themeId, int $nextQuestNumber)
     {
         $nextQuestNumber++;
         $questions = Quest::where([
@@ -43,7 +47,17 @@ class QuestController extends Controller
         ])
             ->with('theme')
             ->get();
-        return view('quest', ['questions' => $questions]);
+        $thisAnswer = $this->answer = $request->input('answer');
+        $thisCorrectAnswer = $this->correctAnswer = $request->input('correctAnswer');
+        $score =0;
+        if($thisAnswer == $thisCorrectAnswer){
+            $score += 1;
+        }
+//        dd($this->answer . ' ' . $this->correctAnswer . ' ' . $this->score);
+        return view('quest', [
+            'questions' => $questions,
+            'score' => $score
+        ]);
     }
 }
 
