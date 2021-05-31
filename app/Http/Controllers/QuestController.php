@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Quest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class QuestController extends Controller
 {
     protected $questNumber = 1;
-    protected $score = 0;
-    protected $answer = '';
-    protected $correctAnswer = '';
 
     /**
      * @param int $themeId
@@ -19,6 +17,9 @@ class QuestController extends Controller
      */
     public function getQuest(int $themeId, Quest $quest)
     {
+        Session::forget('quest.score');
+        Session::forget('quest.questions');
+        Session::push('quest.score', 'data');
         $questions = Quest::where([
             ['theme_id', $themeId],
             ['quest_number', $this->questNumber]
@@ -47,16 +48,18 @@ class QuestController extends Controller
         ])
             ->with('theme')
             ->get();
-        $thisAnswer = $this->answer = $request->input('answer');
-        $thisCorrectAnswer = $this->correctAnswer = $request->input('correctAnswer');
-        $score =0;
+        $thisAnswer = $request->input('answer');
+        $thisCorrectAnswer = $request->input('correctAnswer');
         if($thisAnswer == $thisCorrectAnswer){
-            $score += 1;
+            $request->session()->push('quest.score', $thisAnswer);
         }
-//        dd($this->answer . ' ' . $this->correctAnswer . ' ' . $this->score);
+        $request->session()->push('quest.questions', 'quest');
+        $value = count(Session::get('quest.score')) - 1;
+        $colOfQuestions = count(Session::get('quest.questions'));
         return view('quest', [
             'questions' => $questions,
-            'score' => $score
+            'value' => $value,
+            'colOfQuestions' => $colOfQuestions
         ]);
     }
 }
