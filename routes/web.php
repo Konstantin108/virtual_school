@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\ThemeController;
+use \App\Http\Controllers\QuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,10 +14,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 /*
 Route::get('/', function () {
     return view('home')->name('home');
 });*/
+
 Route::view('/', 'home')->name('home');
 /* временные маршруты без запроса к БД */
 Route::view('/stats', 'stats')->middleware(['auth'])->name('stats');
@@ -26,3 +30,18 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::get('/themes', [ThemeController::class, 'index'])
+    ->name('themes');
+
+Route::get('/themes/show/{id}', [ThemeController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('themes.show');
+
+Route::get('/getQuest/{id}', [QuestController::class, 'getQuest'])
+    ->where('id', '\d+')
+    ->name('getQuest');
+
+Route::get('getNextQuest/{id}/{questNumber}', [QuestController::class, 'getNextQuest'])
+    ->where(['id' => '\d+', 'questNumber' => '\d+'] )
+    ->name('getNextQuest');
