@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $answer_2
  * @property string|null $answer_3
  * @property string|null $answer_4
- * @property string|null $correct_answer
+ * @property int|null $correct_answer
  * @property int|null $quest_number
  * @method static \Illuminate\Database\Eloquent\Builder|Quest newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Quest newQuery()
