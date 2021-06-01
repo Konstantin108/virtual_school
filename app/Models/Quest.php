@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Quest whereAnswer3($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Quest whereAnswer4($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Quest whereCorrectAnswer($value)
- * method static \Illuminate\Database\Eloquent\Builder|Quest whereQuestNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Quest whereQuestNumber($value)
  * @mixin \Eloquent
  */
 class Quest extends Model
