@@ -51,10 +51,10 @@
                                 Результат
                             </h2>
                             <h2 class="card-title uppercase font-semibold text-gray-800 text-2xl font-bold sm:px-6">
-                                всего ответов - {{ $colOfQuestions }}
+                                всего ответов - {{ $colOfQuestions ?? '0'}}
                             </h2>
                             <h2 class="card-title uppercase font-semibold text-gray-800 text-2xl font-bold sm:px-6">
-                                из них правильных - {{ $value }}
+                                из них правильных - {{ $value ?? '0'}}
                             </h2>
                         </div>
                     @endforelse
