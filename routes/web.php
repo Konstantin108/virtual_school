@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\ThemeController;
+use \App\Http\Controllers\QuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home')->name('home');
+});*/
+//Route::view('/', 'home')->name('home');
+
+/* временные маршруты без запроса к контролеру */
+Route::view('/stats', 'stats')->middleware(['auth'])->name('stats');
+Route::view('/rating', 'rating')->name('rating');
+
+/* тестовый маршрут: dashboard */
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+Route::get('/themes', [ThemeController::class, 'index'])->middleware(['auth'])->name('themes');
+
+Route::get('/themes/show/{id}', [ThemeController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('themes.show');
+
+Route::get('/getQuest/{id}', [QuestController::class, 'getQuest'])
+    ->where('id', '\d+')
+    ->name('getQuest');
+
+Route::post('getNextQuest/{id}/{questNumber}', [QuestController::class, 'getNextQuest'])
+    ->where(['id' => '\d+', 'questNumber' => '\d+'] )
+    ->name('getNextQuest');
+
+Route::get('/', [ThemeController::class, 'randomThemes'])->name('home');
