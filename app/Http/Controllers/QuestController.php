@@ -50,7 +50,7 @@ class QuestController extends Controller
             ->get();
         $thisAnswer = $request->input('answer');
         $thisCorrectAnswer = $request->input('correctAnswer');
-        if($thisAnswer == $thisCorrectAnswer){
+        if ($thisAnswer == $thisCorrectAnswer) {
             $request->session()->push('quest.score', $thisAnswer);
         }
         $request->session()->push('quest.questions', 'quest');
