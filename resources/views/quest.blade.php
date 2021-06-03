@@ -24,22 +24,26 @@
                                 </h2>
                             </div>
                             <div class="sm:m-2 lg:m-6 p-2 bg-green-200">
-                                <x-input type="radio" name="answer" id="answer_1" value="1"/>{{ $quest->answer_1 }}
+                                <x-input type="radio" name="answer" id="answer_1"
+                                         value="{{ $quest->answer_1 }}"/>{{ $quest->answer_1 }}
                             </div>
                             <div class="sm:m-2 lg:m-6 p-2 bg-gray-300 m-4">
-                                <x-input type="radio" name="answer" id="answer_2" value="2"/>{{ $quest->answer_2 }}
+                                <x-input type="radio" name="answer" id="answer_2"
+                                         value="{{ $quest->answer_2 }}"/>{{ $quest->answer_2 }}
                             </div>
-                            <div class="sm:m-2 lg:m-6 p-2 bg-yellow-300" >
-                                <x-input type="radio" name="answer" id="answer_3" value="3"/>{{ $quest->answer_3 }}
+                            <div class="sm:m-2 lg:m-6 p-2 bg-yellow-300">
+                                <x-input type="radio" name="answer" id="answer_3"
+                                         value="{{ $quest->answer_3 }}"/>{{ $quest->answer_3 }}
                             </div>
-                            <div class="sm:m-2 lg:m-6 p-2 bg-blue-300" >
-                                <x-input type="radio" name="answer" id="answer_4" value="4"/>{{ $quest->answer_4 }}
+                            <div class="sm:m-2 lg:m-6 p-2 bg-blue-300">
+                                <x-input type="radio" name="answer" id="answer_4"
+                                         value="{{ $quest->answer_4 }}"/>{{ $quest->answer_4 }}
                             </div>
                             <div>
                                 <x-input type="hidden" name="correctAnswer" id="correct_answer"
                                          value="{{ $quest->correct_answer }}"/>
                             </div>
-
+                            <input type="hidden" value="{{ $quest->text }}" id="text" name="text">
                             <x-button class="m-2">
                                 {{ __('Ответить') }}
                             </x-button>

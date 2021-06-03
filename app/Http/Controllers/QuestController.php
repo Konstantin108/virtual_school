@@ -19,6 +19,8 @@ class QuestController extends Controller
     {
         Session::forget('quest.score');
         Session::forget('quest.questions');
+        Session::forget('quest.mistakes');
+        Session::forget('quest.mistakesQuestions');
         Session::push('quest.score', 'data');
         $questions = Quest::where([
             ['theme_id', $themeId],
@@ -50,12 +52,17 @@ class QuestController extends Controller
             ->get();
         $thisAnswer = $request->input('answer');
         $thisCorrectAnswer = $request->input('correctAnswer');
+        $thisText = $request->input('text');
         if ($thisAnswer == $thisCorrectAnswer) {
             $request->session()->push('quest.score', $thisAnswer);
+        }else{
+            $request->session()->push('quest.mistakes', $thisAnswer);
+            $request->session()->push('quest.mistakesQuestions', $thisText);
         }
-        $request->session()->push('quest.questions', 'quest');
+        $request->session()->push('quest.questions', 'data');
         $value = count(Session::get('quest.score')) - 1;
         $colOfQuestions = count(Session::get('quest.questions'));
+        dd($request->session()->all());
         return view('quest', [
             'questions' => $questions,
             'value' => $value,

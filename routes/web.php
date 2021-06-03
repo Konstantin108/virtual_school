@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\QuestController;
+use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\ThemeController;
-use \App\Http\Controllers\QuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get('/themes', [ThemeController::class, 'index'])->middleware(['auth'])->name('themes');
 
@@ -43,7 +43,7 @@ Route::get('/getQuest/{id}', [QuestController::class, 'getQuest'])
     ->name('getQuest');
 
 Route::post('getNextQuest/{id}/{questNumber}', [QuestController::class, 'getNextQuest'])
-    ->where(['id' => '\d+', 'questNumber' => '\d+'] )
+    ->where(['id' => '\d+', 'questNumber' => '\d+'])
     ->name('getNextQuest');
 
 Route::get('/', [ThemeController::class, 'randomThemes'])->name('home');

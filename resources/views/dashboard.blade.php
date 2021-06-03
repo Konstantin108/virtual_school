@@ -38,7 +38,8 @@
                         <h5 class="card-title uppercase font-semibold text-center text-green-300 text-4xl font-bold sm:px-6">
                             27 мая 2021</h5>
                     </div>
-                    <p class="card-text font-medium font-semibold text-center">Сроки проведения программы льготной и другой текст
+                    <p class="card-text font-medium font-semibold text-center">Сроки проведения программы льготной и
+                        другой текст
                         ипотеки</p>
                     {{--<a href="#" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent">Пройти тему</a>--}}
                     <x-btn-link class="btn btn-primary ml-3 sm:m-2 lg:m-6" href="{{ route('home') }}">
@@ -70,7 +71,8 @@
                         <h5 class="card-title uppercase font-semibold text-center text-green-300 text-4xl font-bold sm:px-6">
                             27 мая 2021</h5>
                     </div>
-                    <p class="card-text font-medium font-semibold text-center">Сроки проведения программы льготной и другой текст
+                    <p class="card-text font-medium font-semibold text-center">Сроки проведения программы льготной и
+                        другой текст
                         ипотеки</p>
                     {{--<a href="#" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent">Пройти тему</a>--}}
                     <x-btn-link class="btn btn-primary ml-3 sm:m-2 lg:m-6" href="{{ route('home') }}">
