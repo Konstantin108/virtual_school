@@ -61,6 +61,21 @@
                                 из них правильных - {{ $value ?? '0'}}
                             </h2>
                         </div>
+                        <br>
+                        @if($mistakeQuestions)
+                            <p class="card-title uppercase font-semibold text-gray-800 text-2xl font-bold sm:px-6">
+                                в этих вопросах вы допустили ошибки
+                            </p>
+                            @forelse ($mistakeQuestions as $mistakeQuest)
+                                @forelse($mistakeQuest as $string)
+                                    <div>{{ $string }}</div>
+                                @empty
+                                    <h2>нет ошибок</h2>
+                                @endforelse
+                            @empty
+                                <h3>нет ошибок</h3>
+                            @endforelse
+                        @endif
                     @endforelse
                 </div>
             </div>
