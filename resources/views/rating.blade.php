@@ -11,6 +11,16 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     Рейтинг!
                 </div>
+                <div class="p-6 bg-white border-b border-gray-200">
+                    @forelse($users as $user)
+                        <div>{{ $user->name }}</div>
+                        <div>{{ $user->rating }}</div>
+                    @empty
+                        <div class="card border uppercase bg-red-100 sm:px-6 sm:m-2 lg:px-8 lg:m-4" style="width: 18rem;">
+                            пользователи отсутствуют
+                        </div>
+                    @endforelse
+                </div>
             </div>
         </div>
     </div>
