@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Theme;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class RatingController extends Controller
 {
@@ -12,6 +12,11 @@ class RatingController extends Controller
      */
     public function rating()
     {
-        return view('rating')->with('users', User::query()->orderByDesc('rating')->get());
+        $count = Theme::select()->count();
+        return view('rating', [
+            'count' => $count
+        ])->with('users', User::query()
+            ->orderByDesc('rating')
+            ->get());
     }
 }

@@ -11,7 +11,10 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        return view('index')->with('themes', Theme::query()->orderByDesc('created_at')->paginate(6));
+        return view('index')
+            ->with('themes', Theme::query()
+                ->orderByDesc('created_at')
+                ->paginate(6));
     }
 
     /**
@@ -26,7 +29,10 @@ class ThemeController extends Controller
 
     public function randomThemes()
     {
-        return view('home')->with('themes', Theme::query()->inRandomOrder()->take(3)->get());
+        return view('home')
+            ->with('themes', Theme::query()
+                ->inRandomOrder()
+                ->take(3)->get());
     }
 
 }
