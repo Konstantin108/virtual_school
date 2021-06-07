@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quest;
+use App\Models\Rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 class QuestController extends Controller
 {
     protected $questNumber = 1;
+    protected $savedResult = ['data'];
 
     /**
      * @param int $themeId
@@ -65,12 +67,12 @@ class QuestController extends Controller
         $value = count(Session::get('quest.score')) - 1;
         $colOfQuestions = count(Session::get('quest.questions'));
         $mistakeQuestions = Session::get('quest.mistakeQuestions');
-        $themeIsCompletedId = Session::get('theme.themeIsCompletedId');
+        //$themeIsCompletedId = Session::get('theme.themeIsCompletedId');
         if (Auth::user()) {
             $user = Auth::user();
             $rating = Auth::user()->rating;
-            if (in_array($thisThemeId, $themeIsCompletedId)) {
-            } else {
+            // dd($this->saveResult());
+            if (!in_array($thisThemeId, $this->saveResult())) {
                 if ($value === count($questions) && !$mistakeQuestions) {
                     Session::push('theme.themeIsCompletedId', $thisThemeId);
                     $rating += 1;
@@ -78,6 +80,10 @@ class QuestController extends Controller
                     $user->fill($data);
                     $user->save();
                 }
+            } elseif (in_array($thisThemeId, $this->savedResult)) {
+                $data['rating'] = $rating;
+                $user->fill($data);
+                $user->save();
             }
         }
         return view('quest', [
@@ -102,6 +108,35 @@ class QuestController extends Controller
     public function showSession(Request $request)
     {
         dd($request->session()->all());
+    }
+
+    public function saveResult(): array
+    {
+        $dump = Session::get('theme.themeIsCompletedId');
+        foreach ($dump as $item) {
+            $this->savedResult[] = $item;
+        }
+        return $this->savedResult;
+    }
+
+    public function showSavedResult()
+    {
+        dd($this->saveResult());
+    }
+
+    /**
+     * @return mixed
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function showRating()
+    {
+        $rating = Rate::select([
+            'theme_completed_id'
+        ])
+            ->get();
+        return view('rateTest', [
+            'rating' => $rating
+        ]);
     }
 }
 

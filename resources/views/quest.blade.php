@@ -76,6 +76,7 @@
                                 <h3>нет ошибок</h3>
                             @endforelse
                         @endif
+                        <a href="{{ route('saveResult') }}">сохранить результат</a>
                     @endforelse
                 </div>
             </div>

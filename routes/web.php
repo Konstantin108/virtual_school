@@ -58,6 +58,15 @@ Route::get('/clearSession', [QuestController::class, 'clearSession'])
 Route::get('/showSession', [QuestController::class, 'showSession'])
     ->name('showSession');
 
+Route::get('/saveResult', [QuestController::class, 'saveResult'])
+    ->name('saveResult');
+
+Route::get('/showSavedResult', [QuestController::class, 'showSavedResult'])
+    ->name('showSavedResult');
+
+Route::get('/showRating', [QuestController::class, 'showRating'])
+    ->name('showRating');
+
 Route::get('/rating', [RatingController::class, 'rating'])
     ->name('rating');
 
