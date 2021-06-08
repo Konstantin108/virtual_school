@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Session;
 class QuestController extends Controller
 {
     protected $questNumber = 1;
-    protected $savedResult = ['data'];
 
     /**
      * @param int $themeId
@@ -24,6 +23,7 @@ class QuestController extends Controller
         Session::forget('quest.questions');
         Session::forget('quest.mistakeQuestions');
         Session::push('quest.score', 'data');
+        Session::forget('theme.themeIsCompletedId');
         Session::push('theme.themeIsCompletedId', 'data');
         $questions = Quest::where([
             ['theme_id', $themeId],
@@ -47,7 +47,11 @@ class QuestController extends Controller
     public function getNextQuest(Request $request, int $themeId, int $nextQuestNumber)
     {
         $nextQuestNumber++;
-
+        $ratingItems = [];
+        $ratingFromTable = Rate::all();
+        foreach ($ratingFromTable as $item) {
+            $ratingItems[] = $item->theme_completed_id;
+        }
         $questions = Quest::where([
             ['theme_id', $themeId],
             ['quest_number', $nextQuestNumber]
@@ -67,12 +71,11 @@ class QuestController extends Controller
         $value = count(Session::get('quest.score')) - 1;
         $colOfQuestions = count(Session::get('quest.questions'));
         $mistakeQuestions = Session::get('quest.mistakeQuestions');
-        //$themeIsCompletedId = Session::get('theme.themeIsCompletedId');
         if (Auth::user()) {
             $user = Auth::user();
             $rating = Auth::user()->rating;
-            // dd($this->saveResult());
-            if (!in_array($thisThemeId, $this->saveResult())) {
+            if (in_array($thisThemeId, $ratingItems)) {
+            } else {
                 if ($value === count($questions) && !$mistakeQuestions) {
                     Session::push('theme.themeIsCompletedId', $thisThemeId);
                     $rating += 1;
@@ -80,10 +83,6 @@ class QuestController extends Controller
                     $user->fill($data);
                     $user->save();
                 }
-            } elseif (in_array($thisThemeId, $this->savedResult)) {
-                $data['rating'] = $rating;
-                $user->fill($data);
-                $user->save();
             }
         }
         return view('quest', [
@@ -110,19 +109,51 @@ class QuestController extends Controller
         dd($request->session()->all());
     }
 
-    public function saveResult(): array
+    public function saveResult()
     {
+
+        $data = 0;
         $dump = Session::get('theme.themeIsCompletedId');
-        foreach ($dump as $item) {
-            $this->savedResult[] = $item;
+        for ($i = 0; $i < count($dump); $i++) {
+            $data = $dump[$i];
         }
-        return $this->savedResult;
+        if ($data === 'data') {
+
+        }else{
+            $dataItems = [];
+            $ratingFromTable = Rate::all();
+            foreach ($ratingFromTable as $item) {
+                $dataItems[] = $item->theme_completed_id;
+            }
+
+            if (!in_array($data, $dataItems)) {
+                Rate::insert(array(
+                    'theme_completed_id' => $data
+                ));
+            }
+        }
+
+
+//
+//        $dataScore['theme_completed_id'] = $data;
+//        $rate = Rate::create($dataScore);
+//
+//
+//        if($rate){
+//            return view('index');
+//        }
+//        $rate = New Rate()->theme_completed_id;
+//
+//        $rate->theme_completed_id = $data;
+//        $rate->save();
+
+
     }
 
-    public function showSavedResult()
-    {
-        dd($this->saveResult());
-    }
+//    public function showSavedResult()
+//    {
+//        dd($this->saveResult());
+//    }
 
     /**
      * @return mixed

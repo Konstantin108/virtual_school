@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Rate
- * @package App\Models
- * @package int $id
- * @package int $theme_completed_id
+ * App\Models\Rate
+ *
+ * @property int $id
+ * @property int $theme_completed_id
  * @method static \Illuminate\Database\Eloquent\Builder|Quest newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Quest newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Quest query()
@@ -27,7 +27,6 @@ class Rate extends Model
      * @var string[]
      */
     protected $fillable = [
-        'id',
         'theme_completed_id'
     ];
 
