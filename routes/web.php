@@ -36,7 +36,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('/themes', [ThemeController::class, 'index'])
+Route::get('themes', [ThemeController::class, 'index'])
     ->middleware(['auth'])
     ->name('themes');
 
@@ -60,9 +60,6 @@ Route::get('/showSession', [QuestController::class, 'showSession'])
 
 Route::get('/saveResult', [QuestController::class, 'saveResult'])
     ->name('saveResult');
-
-Route::get('/showSavedResult', [QuestController::class, 'showSavedResult'])
-    ->name('showSavedResult');
 
 Route::get('/showRating', [QuestController::class, 'showRating'])
     ->name('showRating');

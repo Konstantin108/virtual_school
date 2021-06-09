@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $theme_completed_id
+ * @property int $user_id
  * @method static \Illuminate\Database\Eloquent\Builder|Quest newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Quest newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Quest query()
  * @method static \Illuminate\Database\Eloquent\Builder|Quest whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Quest whereThemeCompletedId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Quest whereUserId($value)
  * @mixin \Eloquent
  */
 class Rate extends Model
@@ -27,7 +29,8 @@ class Rate extends Model
      * @var string[]
      */
     protected $fillable = [
-        'theme_completed_id'
+        'theme_completed_id',
+        'user_id'
     ];
 
     /**
@@ -40,6 +43,6 @@ class Rate extends Model
      */
     public function getRating(): array
     {
-        return \DB::select("select id, theme_completed_id");
+        return \DB::select("select id, theme_completed_id, user_id");
     }
 }

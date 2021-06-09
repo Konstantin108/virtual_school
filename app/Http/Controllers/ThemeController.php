@@ -34,5 +34,4 @@ class ThemeController extends Controller
                 ->inRandomOrder()
                 ->take(3)->get());
     }
-
 }

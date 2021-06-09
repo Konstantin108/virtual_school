@@ -25,6 +25,8 @@ class QuestController extends Controller
         Session::push('quest.score', 'data');
         Session::forget('theme.themeIsCompletedId');
         Session::push('theme.themeIsCompletedId', 'data');
+        Session::forget('user.userId');
+        Session::push('user.userId', 'data');
         $questions = Quest::where([
             ['theme_id', $themeId],
             ['quest_number', $this->questNumber]
@@ -48,10 +50,7 @@ class QuestController extends Controller
     {
         $nextQuestNumber++;
         $ratingItems = [];
-        $ratingFromTable = Rate::all();
-        foreach ($ratingFromTable as $item) {
-            $ratingItems[] = $item->theme_completed_id;
-        }
+
         $questions = Quest::where([
             ['theme_id', $themeId],
             ['quest_number', $nextQuestNumber]
@@ -72,12 +71,20 @@ class QuestController extends Controller
         $colOfQuestions = count(Session::get('quest.questions'));
         $mistakeQuestions = Session::get('quest.mistakeQuestions');
         if (Auth::user()) {
+
             $user = Auth::user();
             $rating = Auth::user()->rating;
+            $userId = Auth::user()->id;
+
+            $ratingOnUserId = Rate::all()->where('user_id', $userId);
+            foreach ($ratingOnUserId as $item) {
+                $ratingItems[] = $item->theme_completed_id;
+            }
             if (in_array($thisThemeId, $ratingItems)) {
             } else {
                 if ($value === count($questions) && !$mistakeQuestions) {
                     Session::push('theme.themeIsCompletedId', $thisThemeId);
+                    Session::push('user.userId', $userId);
                     $rating += 1;
                     $data['rating'] = $rating;
                     $user->fill($data);
@@ -111,49 +118,39 @@ class QuestController extends Controller
 
     public function saveResult()
     {
-
         $data = 0;
         $dump = Session::get('theme.themeIsCompletedId');
         for ($i = 0; $i < count($dump); $i++) {
             $data = $dump[$i];
         }
-        if ($data === 'data') {
 
-        }else{
+        $dataId = 0;
+        $dumpDataId = Session::get('user.userId');
+        for ($i = 0; $i < count($dumpDataId); $i++) {
+            $dataId = $dumpDataId[$i];
+        }
+
+        if ($data === 'data') {
+        } else {
             $dataItems = [];
-            $ratingFromTable = Rate::all();
-            foreach ($ratingFromTable as $item) {
+            $ratingOnUserId = Rate::all()->where('user_id', $dataId);
+            foreach ($ratingOnUserId as $item) {
                 $dataItems[] = $item->theme_completed_id;
             }
-
             if (!in_array($data, $dataItems)) {
                 Rate::insert(array(
-                    'theme_completed_id' => $data
+                    'theme_completed_id' => $data,
+                    'user_id' => $dataId
                 ));
             }
         }
-
-
-//
-//        $dataScore['theme_completed_id'] = $data;
-//        $rate = Rate::create($dataScore);
-//
-//
-//        if($rate){
-//            return view('index');
-//        }
-//        $rate = New Rate()->theme_completed_id;
-//
-//        $rate->theme_completed_id = $data;
-//        $rate->save();
-
+        if (Auth::user()) {
+            return redirect()->route('themes');
+        } else {
+            return redirect()->route('home');
+        }
 
     }
-
-//    public function showSavedResult()
-//    {
-//        dd($this->saveResult());
-//    }
 
     /**
      * @return mixed

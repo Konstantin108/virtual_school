@@ -76,7 +76,16 @@
                                 <h3>нет ошибок</h3>
                             @endforelse
                         @endif
-                        <a href="{{ route('saveResult') }}">сохранить результат</a>
+                        <div class="items-center mt-4">
+                            <a href="{{ route('saveResult') }}"
+                               style="color: white;
+                                background-color: #2D3748;
+                                padding: 6px;
+                                border-radius: 10px;
+                         "
+                            >сохранить результат
+                            </a>
+                        </div>
                     @endforelse
                 </div>
             </div>
