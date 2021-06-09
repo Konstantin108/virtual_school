@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rate;
 use App\Models\Theme;
+use Illuminate\Support\Facades\Auth;
 
 class ThemeController extends Controller
 {
@@ -11,7 +13,17 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        return view('index')
+        $ratingItems = [];
+        if (Auth::user()) {
+            $userId = Auth::user()->id;
+            $ratingOnUserId = Rate::all()->where('user_id', $userId);
+            foreach ($ratingOnUserId as $item) {
+                $ratingItems[] = $item->theme_completed_id;
+            }
+        }
+        return view('index', [
+            'ratingItems' => $ratingItems
+        ])
             ->with('themes', Theme::query()
                 ->orderByDesc('created_at')
                 ->paginate(6));

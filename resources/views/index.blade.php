@@ -6,22 +6,42 @@
     </x-slot>
 
     <div class="py-12 justify-center justify-between">
+        @forelse($ratingItems as $item)
+            <div>{{ $item }}</div>
+        @empty
+            <div>пусто</div>
+        @endforelse
         <div class="flex max-w-7xl mx-auto sm:p-4 lg:p-8 flex-wrap justify-center">
             @forelse($themes as $theme)
-                <div class="card border bg-red-100 sm:px-6 sm:m-2 lg:px-8 lg:m-4 " style="width: 18rem;">
+                <div class="card border bg-red-100 sm:px-6 sm:m-2 lg:px-8 lg:m-4"
+                     style="width: 18rem; position: relative; height: 520px;"
+                >
                     <img src="img/exam.png" class="card-img-top" alt="...">
                     <div class="card-body">
                         <div class="items-center inline-flex">
-
                             <h5 class="card-title uppercase font-semibold text-center text-green-300 text-4xl font-bold sm:px-6">
                                 {{ $theme->created_at->format('d F Y') }}
                             </h5>
                         </div>
                         <p class="card-text font-medium font-semibold text-center">{{ $theme->title }}</p>
                         <x-btn-link class="btn btn-primary sm:m-2 lg:m-6"
-                                    href="{{ route('themes.show', ['id' => $theme->id])}}">
+                                    style="position: absolute; bottom: 26px; left: 50px;"
+                                    href="{{ route('themes.show', ['id' => $theme->id])}}"
+                        >
                             {{ __('Пройти тему') }}
                         </x-btn-link>
+                        @forelse($ratingItems as $item)
+                            @if($item == $theme->id)
+                                <div style="position: absolute; right: 10px; bottom: 6px;">
+                                    <i class="fas fa-check"
+                                       style="color: forestgreen"
+                                    >
+                                    </i> тема изучена
+                                </div>
+                            @else
+                            @endif
+                        @empty
+                        @endforelse
                     </div>
                 </div>
             @empty
