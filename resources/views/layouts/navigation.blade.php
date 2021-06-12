@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('themes') }}">
+                    <a href="{{ route('home') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600"/>
                     </a>
                 </div>
@@ -32,7 +32,7 @@
             @guest
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
-                        {{ __('Регистрация') }}
+                        {{ __('Войти') }}
                     </x-nav-link>
                 </div>
             @else

@@ -5,6 +5,12 @@
         </h2>
     </x-slot>
 
+    <h3 class="font-semibold text-xl text-gray-800 text-center font-bold leading-tight" style="margin-top: 10px;">
+        Добро пожаловать в виртуальную школу
+        @if(Auth::user())
+            {{Auth::user()->name}}
+        @endif!
+    </h3>
     <div class="py-12 justify-center justify-between">
         <div class="flex max-w-7xl mx-auto sm:p-4 lg:p-8 flex-wrap justify-center">
             @forelse($themes as $theme)
@@ -25,13 +31,26 @@
                         >
                             {{ __('Пройти тему') }}
                         </x-btn-link>
+                        @forelse($homeItems as $item)
+                            @if($item == $theme->id)
+                                <div style="position: absolute; right: 10px; bottom: 6px;">
+                                    <i class="fas fa-check"
+                                       style="color: forestgreen"
+                                    >
+                                    </i> тема изучена
+                                </div>
+                            @else
+                            @endif
+                        @empty
+                        @endforelse
                     </div>
                 </div>
             @empty
                 <div class="card border bg-red-100 sm:px-6 sm:m-2 lg:px-8 lg:m-4" style="width: 18rem;">
-                    темы отсутствуют
+                    Темы отсутствуют
                 </div>
             @endforelse
+
         </div>
     </div>
 

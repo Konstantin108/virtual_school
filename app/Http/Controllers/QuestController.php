@@ -118,6 +118,8 @@ class QuestController extends Controller
 
     public function saveResult()
     {
+        $redirectCompletedVal = Session::get('redirectToCompleted.value');
+        $redirectHomeVal = Session::get('redirectToHome.value');
         $data = 0;
         $dump = Session::get('theme.themeIsCompletedId');
         for ($i = 0; $i < count($dump); $i++) {
@@ -144,12 +146,16 @@ class QuestController extends Controller
                 ));
             }
         }
-        if (Auth::user()) {
+        if (Auth::user() && !$redirectCompletedVal && !$redirectHomeVal) {
             return redirect()->route('themes');
-        } else {
+        } elseif (Auth::user() && $redirectCompletedVal && !$redirectHomeVal) {
+            return redirect()->route('completedThemes');
+        }elseif (Auth::user() && !$redirectCompletedVal && $redirectHomeVal) {
             return redirect()->route('home');
         }
-
+        else {
+            return redirect()->route('home');
+        }
     }
 
     /**

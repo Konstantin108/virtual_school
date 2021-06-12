@@ -40,6 +40,10 @@ Route::get('themes', [ThemeController::class, 'index'])
     ->middleware(['auth'])
     ->name('themes');
 
+Route::get('completedThemes', [ThemeController::class, 'completedThemes'])
+    ->middleware(['auth'])
+    ->name('completedThemes');
+
 Route::get('/themes/show/{id}', [ThemeController::class, 'show'])
     ->where('id', '\d+')
     ->name('themes.show');

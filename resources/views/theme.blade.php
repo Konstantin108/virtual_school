@@ -18,8 +18,11 @@
                         </div>
                         <h2 class="card-text font-medium font-semibold text-center font-bold text-2xl ">{{ $theme->title }}</h2>
                         <p class="card-text font-medium font-semibold">{{ $theme->text }}</p>
+                        @php
+                            $previous = $_SERVER['HTTP_REFERER']
+                        @endphp
                         <x-btn-link class="btn btn-primary ml-3 sm:m-2 lg:m-6"
-                                    href="{{ route('themes') }}">
+                                    href="{{ $previous }}">
                             {{ __('Вернуться к темам') }}
                         </x-btn-link>
                         <x-btn-link class="btn btn-primary ml-3 sm:m-2 lg:m-6"
