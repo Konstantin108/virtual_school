@@ -3,6 +3,7 @@
 use App\Http\Controllers\QuestController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\StatsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,11 +22,6 @@ Route::get('/', function () {
     return view('home')->name('home');
 });*/
 //Route::view('/', 'home')->name('home');
-
-/* временные маршруты без запроса к контролеру */
-Route::view('/stats', 'stats')
-    ->middleware(['auth'])
-    ->name('stats');
 
 /* тестовый маршрут: dashboard */
 Route::get('/dashboard', function () {
@@ -75,6 +71,11 @@ Route::get('/showRating', [QuestController::class, 'showRating'])
 /* маршрут на страницу рейтинга: rating */
 Route::get('/rating', [RatingController::class, 'rating'])
     ->name('rating');
+
+/* маршрут на страницу статистики: stats */
+Route::get('/stats', [StatsController::class, 'stats'])
+    ->middleware(['auth'])
+    ->name('stats');
 
 Route::get('/', [ThemeController::class, 'randomThemes'])
     ->name('home');
