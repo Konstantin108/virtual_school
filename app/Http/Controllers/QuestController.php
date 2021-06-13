@@ -138,6 +138,7 @@ class QuestController extends Controller
     public
     function saveResult()
     {
+        $dataTime = now();
         $redirectCompletedVal = Session::get('redirectToCompleted.value');
         $redirectHomeVal = Session::get('redirectToHome.value');
         $data = 0;
@@ -162,7 +163,8 @@ class QuestController extends Controller
             if (!in_array($data, $dataItems)) {
                 Rate::insert(array(
                     'theme_completed_id' => $data,
-                    'user_id' => $dataId
+                    'user_id' => $dataId,
+                    'created_at' => $dataTime
                 ));
             }
         }

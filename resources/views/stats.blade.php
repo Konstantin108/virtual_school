@@ -29,7 +29,15 @@
                                 <td class="text_in_tbl border_f_tbl">{{ $theme->id }}</td>
                                 <td class="stl_f_title_in_tbl border_f_tbl">{{  $theme->title }}</td>
                                 <td class="text_in_tbl border_f_tbl">{{  $theme->created_at->format('d F Y') }}</td>
-                                <td class="text_in_tbl update_in_tbl border_f_tbl created_in_tbl">пока пусто</td>
+                                <td class="text_in_tbl update_in_tbl border_f_tbl created_in_tbl">
+                                    @foreach($allRate as $rateItem)
+                                        @if($rateItem->theme_completed_id == $theme->id)
+                                            @if($rateItem->created_at)
+                                                {{ $rateItem->created_at->format('d F Y') }}
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </td>
                                 <td style="width: 150px;" class="text_in_tbl">
                                     @foreach($themeNames as $item)
                                         @if($item == $theme->id)

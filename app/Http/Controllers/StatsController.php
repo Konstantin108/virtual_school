@@ -17,15 +17,15 @@ class StatsController extends Controller
         $name = Auth::user()->name;
         $count = Theme::select()->count();
         $rate = Rate::where([
-                ['user_id', $id]
-            ])
+            ['user_id', $id]
+        ])
             ->count();
-//        $themes = Theme::select()->get();
+
+        $allRate = Rate::all()->push();
+
         $themeNames = [];
         $ratingOnUserId = Rate::all()
             ->where('user_id', $id);
-
-
         foreach ($ratingOnUserId as $item) {
             $themeNames[] = $item->theme_completed_id;
         }
@@ -34,9 +34,10 @@ class StatsController extends Controller
             'count' => $count,
             'rate' => $rate,
             'name' => $name,
-            'themeNames' => $themeNames
+            'themeNames' => $themeNames,
+            'allRate' => $allRate
         ])
             ->with('themes', Theme::query()
-            ->get());
+                ->get());
     }
 }
