@@ -4,7 +4,13 @@
             {{ __('СПИСОК ТЕМ К ИЗУЧЕНИЮ') }}
         </h2>
     </x-slot>
-
+    <div class="block_f_msgs">
+        @if(session()->has('success'))
+            <div class="success_msgs">{{session()->get('success')}}</div>
+        @elseif(session()->has('error'))
+            <div class="fail_msgs">{{session()->get('fail')}}</div>
+        @endif
+    </div>
     <div class="py-12 justify-center justify-between">
         <div class="flex max-w-7xl mx-auto sm:p-4 lg:p-8 flex-wrap justify-center">
             <div class="card border bg-red-100 sm:px-6 sm:m-2 lg:px-8 lg:m-4"

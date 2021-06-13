@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\QuestController;
 use App\Http\Controllers\RatingController;
-use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\Admin\ThemesController as AdminThemesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +24,13 @@ Route::get('/', function () {
     return view('home')->name('home');
 });*/
 //Route::view('/', 'home')->name('home');
+
+/* for admin */
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'admin'], function () {
+        Route::resource('/themes', AdminThemesController::class);
+    });
+});
 
 /* тестовый маршрут: dashboard */
 Route::get('/dashboard', function () {
@@ -52,6 +61,8 @@ Route::post('getNextQuest/{id}/{questNumber}', [QuestController::class, 'getNext
     ->where(['id' => '\d+', 'questNumber' => '\d+'])
     ->name('getNextQuest');
 
+Route::resource('/message', MessageController::class);
+
 /* тестовый маршрут для удаления всех данных из сессии */
 Route::get('/clearSession', [QuestController::class, 'clearSession'])
     ->name('clearSession');
@@ -76,6 +87,11 @@ Route::get('/rating', [RatingController::class, 'rating'])
 Route::get('/stats', [StatsController::class, 'stats'])
     ->middleware(['auth'])
     ->name('stats');
+
+/* маршрут на страницу обратной связи */
+Route::get('/message', [MessageController::class, 'message'])
+    ->middleware(['auth'])
+    ->name('message');
 
 Route::get('/', [ThemeController::class, 'randomThemes'])
     ->name('home');

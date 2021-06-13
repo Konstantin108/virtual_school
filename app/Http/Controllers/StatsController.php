@@ -35,7 +35,8 @@ class StatsController extends Controller
             'rate' => $rate,
             'name' => $name,
             'themeNames' => $themeNames,
-            'allRate' => $allRate
+            'allRate' => $allRate,
+            'id' => $id
         ])
             ->with('themes', Theme::query()
                 ->get());
