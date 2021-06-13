@@ -20,7 +20,8 @@ class ThemeController extends Controller
         $count = Theme::select()->count();
         if (Auth::user()) {
             $userId = Auth::user()->id;
-            $ratingOnUserId = Rate::all()->where('user_id', $userId);
+            $ratingOnUserId = Rate::all()
+                ->where('user_id', $userId);
             foreach ($ratingOnUserId as $item) {
                 $ratingItems[] = $item->theme_completed_id;
             }

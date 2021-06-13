@@ -24,6 +24,8 @@ class QuestController extends Controller
         Session::forget('quest.mistakeQuestions');
         Session::push('quest.score', 'data');
         Session::forget('theme.themeIsCompletedId');
+        Session::forget('quest.mistakeQuestionsCount');
+        Session::push('quest.mistakeQuestionsCount', 'data');
         Session::push('theme.themeIsCompletedId', 'data');
         Session::forget('user.userId');
         Session::push('user.userId', 'data');
@@ -65,15 +67,16 @@ class QuestController extends Controller
             $request->session()->push('quest.score', $thisAnswer);
         } else {
             $request->session()->push('quest.mistakeQuestions', [$thisText, 'Ваш ответ: ' . $thisAnswer]);
+            $request->session()->push('quest.mistakeQuestionsCount', 'data');
         }
         $request->session()->push('quest.questions', 'data');
         $value = count(Session::get('quest.score')) - 1;
         $colOfQuestions = count(Session::get('quest.questions'));
         $mistakeQuestions = Session::get('quest.mistakeQuestions');
+        $mistakeQuestionsCount = count(Session::get('quest.mistakeQuestionsCount'));
         if (Auth::user()) {
 
             $user = Auth::user();
-            $rating = Auth::user()->rating;
             $userId = Auth::user()->id;
 
             $ratingOnUserId = Rate::all()->where('user_id', $userId);
@@ -82,28 +85,43 @@ class QuestController extends Controller
             }
             if (in_array($thisThemeId, $ratingItems)) {
             } else {
-                if ($value === count($questions) && !$mistakeQuestions) {
+                if ($mistakeQuestionsCount > 1) {
+                    Session::push('theme.themeIsCompletedId', 0);
+                    Session::push('user.userId', 0);
+                    $rateDef = 0;
+                    $rating = Rate::select()
+                        ->where('user_id', $userId)
+                        ->count();
+                    $rateData = $rateDef + $rating;
+                    $data['rating'] = $rateData;
+                    $user->fill($data);
+                    $user->save();
+                } elseif ($value == count($questions) && $mistakeQuestionsCount < 2) {
+
                     Session::push('theme.themeIsCompletedId', $thisThemeId);
                     Session::push('user.userId', $userId);
-                    $rating += 1;
-                    $data['rating'] = $rating;
+                    $rateDef = 1;
+                    $rating = Rate::select()
+                        ->where('user_id', $userId)
+                        ->count();
+                    $rateData = $rateDef + $rating;
+                    $data['rating'] = $rateData;
                     $user->fill($data);
                     $user->save();
                 }
             }
         }
-        return view('quest', [
-            'questions' => $questions,
+        return view('quest', ['questions' => $questions,
             'value' => $value,
             'colOfQuestions' => $colOfQuestions,
-            'mistakeQuestions' => $mistakeQuestions
-        ]);
+            'mistakeQuestions' => $mistakeQuestions]);
     }
 
     /**
      * @param Request $request
      */
-    public function clearSession(Request $request)
+    public
+    function clearSession(Request $request)
     {
         $request->session()->flush();
     }
@@ -111,12 +129,14 @@ class QuestController extends Controller
     /**
      * @param Request $request
      */
-    public function showSession(Request $request)
+    public
+    function showSession(Request $request)
     {
         dd($request->session()->all());
     }
 
-    public function saveResult()
+    public
+    function saveResult()
     {
         $redirectCompletedVal = Session::get('redirectToCompleted.value');
         $redirectHomeVal = Session::get('redirectToHome.value');
@@ -150,10 +170,9 @@ class QuestController extends Controller
             return redirect()->route('themes');
         } elseif (Auth::user() && $redirectCompletedVal && !$redirectHomeVal) {
             return redirect()->route('completedThemes');
-        }elseif (Auth::user() && !$redirectCompletedVal && $redirectHomeVal) {
+        } elseif (Auth::user() && !$redirectCompletedVal && $redirectHomeVal) {
             return redirect()->route('home');
-        }
-        else {
+        } else {
             return redirect()->route('home');
         }
     }
@@ -162,7 +181,8 @@ class QuestController extends Controller
      * @return mixed
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function showRating()
+    public
+    function showRating()
     {
         $rating = Rate::select([
             'theme_completed_id'
