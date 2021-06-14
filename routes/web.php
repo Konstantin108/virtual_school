@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\ThemesController as AdminThemesController;
+use App\Http\Controllers\Admin\UsersController as AdminUsersController;
+use App\Http\Controllers\Admin\QuestionsController as AdminQuestionsController;
+use App\Http\Controllers\Admin\MessagesController as AdminMessagesController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\QuestController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\ThemeController;
-use App\Http\Controllers\Admin\ThemesController as AdminThemesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,10 +28,13 @@ Route::get('/', function () {
 });*/
 //Route::view('/', 'home')->name('home');
 
-/* for admin */
 Route::group(['middleware' => 'auth'], function () {
-    Route::group(['prefix' => 'admin'], function () {
+    //for admin
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::resource('/themes', AdminThemesController::class);
+        Route::resource('/users', AdminUsersController::class);
+        Route::resource('/questions', AdminQuestionsController::class);
+        Route::resource('/messages', AdminMessagesController::class);
     });
 });
 
