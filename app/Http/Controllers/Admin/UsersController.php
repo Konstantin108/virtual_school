@@ -16,8 +16,10 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::select()->get();
+        $count = User::select()->count();
         return view('admin.users', [
-            'users' => $users
+            'users' => $users,
+            'count' => $count
         ]);
     }
 

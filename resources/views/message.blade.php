@@ -114,6 +114,7 @@
                        padding: 6px;
                        border-radius: 10px;
                        margin-top: 14px;
+                       outline: none;
                 ">
                     Сохранить
                 </button>

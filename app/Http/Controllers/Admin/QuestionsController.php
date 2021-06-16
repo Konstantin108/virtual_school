@@ -18,9 +18,11 @@ class QuestionsController extends Controller
     {
         $questions = Quest::select()->get();
         $themes = Theme::all()->push();
+        $count = Quest::select()->count();
         return view('admin.questions', [
             'questions' => $questions,
-            'themes' => $themes
+            'themes' => $themes,
+            'count' => $count
         ]);
     }
 

@@ -17,8 +17,10 @@ class ThemesController extends Controller
     public function index()
     {
         $themes = Theme::select()->get();
+        $count = Theme::select()->count();
         return view('admin.themes', [
-            'themes' => $themes
+            'themes' => $themes,
+            'count' => $count
         ]);
     }
 

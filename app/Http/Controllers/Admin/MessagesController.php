@@ -16,8 +16,10 @@ class MessagesController extends Controller
     public function index()
     {
         $messages = Message::select()->get();
+        $count = Message::select()->count();
         return view('admin.messages', [
-            'messages' => $messages
+            'messages' => $messages,
+            'count' => $count
         ]);
     }
 
