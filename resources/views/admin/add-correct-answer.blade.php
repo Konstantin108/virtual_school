@@ -20,9 +20,21 @@
     <div class="row">
         <div class="col-6 offset-2">
             <form method="post"
-                  action="{{ route('saveCorrectAnswer', ['quest' => $quest]) }}"
-            >
+                  action="{{ route('saveCorrectAnswer', [
+                           'quest' => $quest,
+                           'questions' => $questions
+                      ])
+                  }}">
                 @csrf
+                @php
+                    $arr = [];
+                    foreach($questions as $questItem){
+                        if($questItem->theme_id === $quest->theme_id ){
+                            $arr[] = $questItem->theme_id;
+                        }
+                    }
+                    $count = count($arr);
+                @endphp
                 <input type="hidden"
                        id="id"
                        name="id"
@@ -84,7 +96,7 @@
                 <input type="hidden"
                        id="quest_number"
                        name="quest_number"
-                       value="1">
+                       value="{{ $count }}">
                 <input type="hidden"
                        id="text"
                        name="text"

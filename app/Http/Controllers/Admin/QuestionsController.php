@@ -48,9 +48,11 @@ class QuestionsController extends Controller
      */
     public function addCorrectAnswer(int $id)
     {
+        $questions = Quest::all()->push();
         $quest = Quest::findOrFail($id);
         return view('admin.add-correct-answer', [
-            'quest' => $quest
+            'quest' => $quest,
+            'questions' => $questions
         ]);
     }
 
