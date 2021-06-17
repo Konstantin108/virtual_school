@@ -41,8 +41,13 @@
                     <td>{{ $message->text }}</td>
                     <td>{{ $message->created_at }}</td>
                     <td>{{ $message->updated_at }}</td>
-                    <td>
-                        <a href="#">Перейти</a>&nbsp
+                    <td style="display: flex; justify-content: space-around">
+                        <a href="#">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
                     </td>
                 </tr>
             @empty

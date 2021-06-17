@@ -56,7 +56,7 @@ class Quest extends Model
     /**
      * @var bool
      */
-    protected $temestamps = false;
+    public $timestamps  = false;
 
     /**
      * @return BelongsTo

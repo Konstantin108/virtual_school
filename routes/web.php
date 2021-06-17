@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\MessagesController as AdminMessagesController;
+use App\Http\Controllers\Admin\QuestionsController as AdminQuestionsController;
 use App\Http\Controllers\Admin\ThemesController as AdminThemesController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
-use App\Http\Controllers\Admin\QuestionsController as AdminQuestionsController;
-use App\Http\Controllers\Admin\MessagesController as AdminMessagesController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\QuestController;
 use App\Http\Controllers\RatingController;
@@ -36,6 +36,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/questions', AdminQuestionsController::class);
         Route::resource('/messages', AdminMessagesController::class);
     });
+
+    Route::get('admin/questions/addCorrectAnswer/{id}', [AdminQuestionsController::class, 'addCorrectAnswer'])
+        ->where('id', '\d+')
+        ->name('addCorrectAnswer');
+
+    Route::post('admin/questions/saveCorrectAnswer', [AdminQuestionsController::class, 'saveCorrectAnswer'])
+        ->name('saveCorrectAnswer');
 });
 
 /* тестовый маршрут: dashboard */

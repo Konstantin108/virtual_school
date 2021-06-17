@@ -64,7 +64,9 @@
                         >
                             <option value="0">Выберите тему, с которой связана проблема</option>
                             @foreach($themes as $theme)
-                                <option value="{{$theme->title}}">       {{$theme->title}}</option>
+                                <option value="{{$theme->title}}">
+                                    {{$theme->title}}
+                                </option>
                             @endforeach
                         </select>
                         @if($errors->has('theme_title'))

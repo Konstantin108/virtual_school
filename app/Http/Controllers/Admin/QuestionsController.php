@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateQuestRequest;
+use App\Http\Requests\SaveCorrectAnswerRequest;
 use App\Models\Quest;
 use App\Models\Theme;
 use Illuminate\Http\Request;
@@ -33,24 +35,82 @@ class QuestionsController extends Controller
      */
     public function create()
     {
-        return view('admin.add-quest');
+        $themes = Theme::all()->push();
+        $questions = Quest::all()->push();
+        return view('admin.add-quest', [
+            'themes' => $themes,
+            'questions' => $questions
+        ]);
+    }
+
+    /**
+     * @param int $id
+     */
+    public function addCorrectAnswer(int $id)
+    {
+        $quest = Quest::findOrFail($id);
+        return view('admin.add-correct-answer', [
+            'quest' => $quest
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\CreateQuestRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateQuestRequest $request)
     {
-        //
+        $data = $request->only([
+            'theme_id',
+            'text',
+            'answer_1',
+            'answer_2',
+            'answer_3',
+            'answer_4',
+            'quest_number',
+            'correct_answer'
+        ]);
+        $quest = Quest::create($data);
+        if ($quest) {
+            return redirect()->route('addCorrectAnswer', [
+                'id' => $quest->id
+            ]);
+        }
+        return back();
+    }
+
+    /**
+     * @param SaveCorrectAnswerRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveCorrectAnswer(SaveCorrectAnswerRequest $request)
+    {
+        $data = $request->only([
+            'id',
+            'theme_id',
+            'text',
+            'answer_1',
+            'answer_2',
+            'answer_3',
+            'answer_4',
+            'quest_number',
+            'correct_answer'
+        ]);
+        $thisId = $data['id'];
+        $quest = Quest::find($thisId);
+        $quest = $quest->fill($data)->save();
+        if ($quest) {
+            return redirect()->route('admin.questions.index');
+        }
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,7 +121,7 @@ class QuestionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -72,8 +132,8 @@ class QuestionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -84,7 +144,7 @@ class QuestionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
