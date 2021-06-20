@@ -51,6 +51,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/questions/deleteQuest/{id}', [AdminQuestionsController::class, 'deleteQuest'])
         ->where('id', '\d+')
         ->name('deleteQuest');
+
+    Route::get('admin/questions/thisThemeQuestions/{id}', [AdminQuestionsController::class, 'thisThemeQuestions'])
+        ->where('id', '\d+')
+        ->name('thisThemeQuestions');
+
+    Route::get('admin/questions/thisThemeAddQuest/{id}', [AdminQuestionsController::class, 'thisThemeAddQuest'])
+        ->where('id', '\d+')
+        ->name('thisThemeAddQuest');
 });
 
 /* тестовый маршрут: dashboard */

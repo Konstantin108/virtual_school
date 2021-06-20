@@ -96,7 +96,6 @@
         text-decoration: none;
         color: white;
         border-radius: 12px;
-        margin-right: 20px;
      "
     >
         удалить {{ $count }} элемента
@@ -104,9 +103,10 @@
     <a
         href="{{ route('admin.themes.index') }}"
         style="height: 30px;
+        margin-left: 20px;
         min-width: 100px;
         padding: 10px;
-        background-color: #2fc98e;
+        background-color: #cbcb0c;
         text-decoration: none;
         color: white;
         border-radius: 12px;

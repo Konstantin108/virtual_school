@@ -45,7 +45,13 @@
                     <td>{{ $theme->id }}</td>
                     <td>{{ $theme->title }}</td>
                     <td>
-                        <a href="#">Перейти к вопросам</a>
+                        <a
+                            href="{{ route('thisThemeQuestions', [
+                                            'id' => $theme->id
+                                       ])
+                            }}">
+                            Перейти к вопросам
+                        </a>
                         @php
                             $arr = [];
                             foreach($questions as $quest){

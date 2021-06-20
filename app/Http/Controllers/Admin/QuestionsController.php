@@ -8,7 +8,6 @@ use App\Http\Requests\EditQuestRequest;
 use App\Http\Requests\SaveCorrectAnswerRequest;
 use App\Models\Quest;
 use App\Models\Theme;
-use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
 {
@@ -30,9 +29,28 @@ class QuestionsController extends Controller
     }
 
     /**
+     * @param int $themeId
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function thisThemeQuestions(int $id)
+    {
+        $questions = Quest::where([
+            'theme_id' => $id
+        ])
+            ->with('theme')
+            ->get();
+        $count = $questions->count();
+        return view('admin.theme-questions', [
+            'questions' => $questions,
+            'count' => $count,
+            'id' => $id
+        ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -41,6 +59,22 @@ class QuestionsController extends Controller
         return view('admin.add-quest', [
             'themes' => $themes,
             'questions' => $questions
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     */
+    public function thisThemeAddQuest(int $id)
+    {
+        $themes = Theme::all()->push();
+        $questions = Quest::all()->push();
+        return view('admin.theme-add-quest', [
+            'themes' => $themes,
+            'questions' => $questions,
+            'id' => $id
         ]);
     }
 
