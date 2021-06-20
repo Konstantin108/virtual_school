@@ -17,6 +17,13 @@
                 </div>
             </div>
         </div>
+        <div style="min-width: 200px; height: 30px; margin-left: 50%;">
+            @if(session()->has('success'))
+                <div class="alert alert-success">{{session()->get('success')}}</div>
+            @elseif(session()->has('error'))
+                <div class="fail_msgs">{{session()->get('fail')}}</div>
+            @endif
+        </div>
     </div>
     <div class="row">
         <table class="table table-bordered">
@@ -48,12 +55,16 @@
                         @endif
                     </td>
                     <td style="display: flex; justify-content: space-around">
-                        <a href="#">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
+                        @if($user->is_admin)
+                            запрещено
+                        @else
+                            <a href="{{ route('admin.users.edit', ['user' => $user])}}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{{ route('deleteUser', ['id' => $user->id]) }}">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        @endif
                     </td>
                 </tr>
             @empty

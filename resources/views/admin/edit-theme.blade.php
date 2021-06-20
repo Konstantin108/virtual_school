@@ -64,7 +64,10 @@
                         $count = count($arr);
                     @endphp
                     <div>Вопросов по теме всего: {{ $count }}</div>
-                    <a href="#">перейти к вопросам</a>
+                    <a href="{{ route('thisThemeQuestions', [
+                                            'id' => $theme->id
+                                       ])
+                            }}">перейти к вопросам</a>
                     @if($count < 2)
                         <div style="color: red">для публикации темы необходимо добавить минимум 2 проверочных вопроса
                         </div>
@@ -88,6 +91,19 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-success">Сохранить</button>
+                <a
+                    href="{{ route('admin.themes.index') }}"
+                    style="height: 30px;
+                           margin-left: 20px;
+                           min-width: 100px;
+                           padding: 8px;
+                           background-color: #cbcb0c;
+                           text-decoration: none;
+                           color: white;
+                           border-radius: 8px;"
+                >
+                    назад
+                </a>
             </form>
         </div>
     </div>

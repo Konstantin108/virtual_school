@@ -52,6 +52,14 @@ Route::group(['middleware' => 'auth'], function () {
         ->where('id', '\d+')
         ->name('deleteQuest');
 
+    Route::get('admin/messages/deleteMessage/{id}', [AdminMessagesController::class, 'deleteMessage'])
+        ->where('id', '\d+')
+        ->name('deleteMessage');
+
+    Route::get('admin/users/deleteUser/{id}', [AdminUsersController::class, 'deleteUser'])
+        ->where('id', '\d+')
+        ->name('deleteUser');
+
     Route::get('admin/questions/thisThemeQuestions/{id}', [AdminQuestionsController::class, 'thisThemeQuestions'])
         ->where('id', '\d+')
         ->name('thisThemeQuestions');

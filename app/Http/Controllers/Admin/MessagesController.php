@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EditMessageRequest;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessagesController extends Controller
 {
@@ -58,24 +60,35 @@ class MessagesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Message $message
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Message $message)
     {
-        //
+        $curator = Auth::user();
+        return view('admin.edit-message', [
+            'message' => $message,
+            'curator' => $curator
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param EditMessageRequest $request
+     * @param Message $message
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(EditMessageRequest $request, Message $message)
     {
-        //
+        $data = $request->validated();
+        $message = $message->fill($data);
+        if ($message->save()) {
+            return redirect()->route('admin.messages.index')
+                ->with('success', __('messages.admin.messages.update.success'));
+        }
+        return back()
+            ->with('error', __('messages.admin.messages.update.fail'));
     }
 
     /**
@@ -87,5 +100,23 @@ class MessagesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteMessage($id)
+    {
+        $message = Message::findOrFail($id);
+        $message->delete();
+        if ($message) {
+            return redirect()->route('admin.messages.index')
+                ->with('success', __('messages.admin.messages.delete.success'));
+        }
+        return back()
+            ->with('error', __('messages.admin.messages.delete.fail'));
     }
 }

@@ -12,10 +12,17 @@
                                 <p style="font-size: 15px;">(всего: {{ $count }})</p>
                             </div>
                         </div>
-                        <i class="fas fa-question fa-2x text-gray-200"></i>
+                        <i class="fas fa-envelope-open-text fa-2x text-gray-200"></i>
                     </div>
                 </div>
             </div>
+        </div>
+        <div style="min-width: 200px; height: 30px; margin-left: 50%;">
+            @if(session()->has('success'))
+                <div class="alert alert-success">{{session()->get('success')}}</div>
+            @elseif(session()->has('error'))
+                <div class="fail_msgs">{{session()->get('fail')}}</div>
+            @endif
         </div>
     </div>
     <div class="row">
@@ -25,7 +32,8 @@
                 <th>#ID</th>
                 <th style="width: 220px;">имя пользователя</th>
                 <th>тип проблемы</th>
-                <th>текст обращения</th>
+                <th>статус</th>
+                <th>ответственный</th>
                 <th>дата добавления</th>
                 <th>дата обновления</th>
                 <th>действие</th>
@@ -38,14 +46,29 @@
                     <td>{{ $message->id }}</td>
                     <td style="width: 220px;">{{ $message->user_name }}</td>
                     <td>{{ $message->problem_theme }}</td>
-                    <td>{{ $message->text }}</td>
+                    <td>
+                        @if($message->status == 'ожидание')
+                            <span style="color: indianred">ожидает назначения</span>
+                        @elseif($message->status == 'в работе')
+                           <span style="color: blue">в работе</span>
+                        @else
+                            <span style="color: green">обращение закрыто</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if($message->curator)
+                            <span style="color: blue">{{ $message->curator }}</span>
+                        @else
+                            <span style="color: indianred">не назначен</span>
+                        @endif
+                    </td>
                     <td>{{ $message->created_at }}</td>
                     <td>{{ $message->updated_at }}</td>
                     <td style="display: flex; justify-content: space-around">
-                        <a href="#">
-                            <i class="fas fa-edit"></i>
+                        <a href="{{ route('admin.messages.edit', ['message' => $message])}}">
+                            <i class="fas fa-users-cog"></i>
                         </a>
-                        <a href="#">
+                        <a href="{{ route('deleteMessage', ['id' => $message->id])}}">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>

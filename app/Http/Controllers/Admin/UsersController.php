@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -17,9 +19,11 @@ class UsersController extends Controller
     {
         $users = User::select()->get();
         $count = User::select()->count();
+        $user = Auth::user();
         return view('admin.users', [
             'users' => $users,
-            'count' => $count
+            'count' => $count,
+            'user' => $user
         ]);
     }
 
@@ -58,24 +62,33 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('admin.edit-user', [
+            'user' => $user
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param EditUserRequest $request
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditUserRequest $request, User $user)
     {
-        //
+        $data = $request->validated();
+        $user = $user->fill($data);
+        if ($user->save()) {
+            return redirect()->route('admin.users.index')
+                ->with('success', __('messages.admin.users.update.success'));
+        }
+        return back()
+            ->with('error', __('messages.admin.users.update.fail'));
     }
 
     /**
@@ -87,5 +100,23 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        if ($user) {
+            return redirect()->route('admin.users.index')
+                ->with('success', __('messages.admin.users.delete.success'));
+        }
+        return back()
+            ->with('error', __('messages.admin.users.delete.fail'));
     }
 }
