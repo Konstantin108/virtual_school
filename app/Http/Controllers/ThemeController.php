@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ThemeStatusEnum;
 use App\Models\Rate;
 use App\Models\Theme;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,9 @@ class ThemeController extends Controller
         Session::forget('redirectToCompleted.value');
         Session::forget('redirectToHome.value');
         $ratingItems = [];
-        $count = Theme::select()->count();
+        $count = Theme::select()
+            ->where('status', ThemeStatusEnum::PUBLISHED)
+            ->count();
         if (Auth::user()) {
             $userId = Auth::user()->id;
             $ratingOnUserId = Rate::all()
@@ -31,6 +34,7 @@ class ThemeController extends Controller
             'count' => $count
         ])
             ->with('themes', Theme::query()
+                ->where('status', ThemeStatusEnum::PUBLISHED)
                 ->orderByDesc('created_at')
                 ->get());
     }
@@ -53,6 +57,7 @@ class ThemeController extends Controller
             'completedItems' => $completedItems
         ])
             ->with('themes', Theme::query()
+                ->where('status', ThemeStatusEnum::PUBLISHED)
                 ->orderByDesc('created_at')
                 ->get());
     }
@@ -87,6 +92,7 @@ class ThemeController extends Controller
             'homeItems' => $homeItems
         ])
             ->with('themes', Theme::query()
+                ->where('status', ThemeStatusEnum::PUBLISHED)
                 ->inRandomOrder()
                 ->take(3)->get());
     }

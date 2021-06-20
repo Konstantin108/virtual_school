@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ThemeStatusEnum;
 use App\Http\Requests\MessageRequest;
 use App\Models\Message;
 use App\Models\Theme;
@@ -10,7 +11,9 @@ class MessageController extends Controller
 {
     public function message()
     {
-        $themes = Theme::all()->push();
+        $themes = Theme::all()
+            ->where('status', ThemeStatusEnum::PUBLISHED)
+            ->push();
         return view('message', [
             'themes' => $themes
         ]);

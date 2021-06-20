@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ThemeStatusEnum;
 use App\Models\Theme;
 use App\Models\User;
 
@@ -12,7 +13,9 @@ class RatingController extends Controller
      */
     public function rating()
     {
-        $count = Theme::select()->count();
+        $count = Theme::select()
+            ->where('status', ThemeStatusEnum::PUBLISHED)
+            ->count();
         return view('rating', [
             'count' => $count
         ])->with('users', User::query()

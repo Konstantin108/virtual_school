@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $text
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string $status
  * @method static \Illuminate\Database\Eloquent\Builder|Theme newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Theme newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Theme query()
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Theme whereText($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theme whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theme whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Theme whereStatus($value)
  * @mixin \Eloquent
  */
 class Theme extends Model
@@ -37,7 +39,8 @@ class Theme extends Model
         'title',
         'text',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'status'
     ];
 
     /**

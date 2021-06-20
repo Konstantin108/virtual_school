@@ -60,7 +60,7 @@ class QuestionsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\CreateQuestRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateQuestRequest $request)
     {
@@ -104,9 +104,11 @@ class QuestionsController extends Controller
         $quest = Quest::find($thisId);
         $quest = $quest->fill($data)->save();
         if ($quest) {
-            return redirect()->route('admin.questions.index');
+            return redirect()->route('admin.questions.index')
+                ->with('success', __('messages.admin.questions.create.success'));;
         }
-        return back();
+        return back()
+            ->with('error', __('messages.questions.themes.create.fail'));
     }
 
     /**
@@ -152,5 +154,23 @@ class QuestionsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteQuest($id)
+    {
+        $quest = Quest::findOrFail($id);
+        $quest->delete();
+        if ($quest) {
+            return redirect()->route('admin.questions.index')
+                ->with('success', __('messages.admin.questions.delete.success'));
+        }
+        return back()
+            ->with('error', __('messages.admin.questions.delete.fail'));
     }
 }

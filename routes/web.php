@@ -43,6 +43,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('admin/questions/saveCorrectAnswer', [AdminQuestionsController::class, 'saveCorrectAnswer'])
         ->name('saveCorrectAnswer');
+
+    Route::get('admin/themes/deleteTheme/{id}', [AdminThemesController::class, 'deleteTheme'])
+        ->where('id', '\d+')
+        ->name('deleteTheme');
+
+    Route::get('admin/questions/deleteQuest/{id}', [AdminQuestionsController::class, 'deleteQuest'])
+        ->where('id', '\d+')
+        ->name('deleteQuest');
 });
 
 /* тестовый маршрут: dashboard */

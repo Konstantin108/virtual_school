@@ -40,7 +40,13 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at }}</td>
                     <td>{{ $user->updated_at }}</td>
-                    <td>{{ $user->is_admin }}</td>
+                    <td>
+                        @if($user->is_admin)
+                            <p style="color: green">да</p>
+                        @else
+                            <p style="color: indianred">нет</p>
+                        @endif
+                    </td>
                     <td style="display: flex; justify-content: space-around">
                         <a href="#">
                             <i class="fas fa-edit"></i>

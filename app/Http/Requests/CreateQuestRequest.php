@@ -34,4 +34,14 @@ class CreateQuestRequest extends FormRequest
             'correct_answer' => ['required', 'string', 'min:2']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'required' =>   'Поле является обязательным к заполнению',
+            'min' => [
+                'numeric' => 'Вы не выбрали тему'
+            ],
+        ];
+    }
 }

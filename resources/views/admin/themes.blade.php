@@ -32,6 +32,7 @@
                 <th>#ID</th>
                 <th>заголовок</th>
                 <th>вопросы</th>
+                <th>статус</th>
                 <th>дата добавления</th>
                 <th>дата обновления</th>
                 <th>действие</th>
@@ -45,14 +46,33 @@
                     <td>{{ $theme->title }}</td>
                     <td>
                         <a href="#">Перейти к вопросам</a>
+                        @php
+                            $arr = [];
+                            foreach($questions as $quest){
+                                if($quest->theme_id === $theme->id ){
+                                    $arr[] = $quest->theme_id;
+                                }
+                            }
+                            $count = count($arr);
+                        @endphp
+                        <span>({{ $count }}шт.)</span>
+                    </td>
+                    <td>
+                        @if($theme->status == 'published')
+                            <p style="color: green">опубликовано</p>
+                        @elseif($theme->status == 'blocked')
+                            <p style="color: indianred">заблокировано</p>
+                        @else
+                            <p style="color: blue">на модерации</p>
+                        @endif
                     </td>
                     <td>{{ $theme->created_at }}</td>
                     <td>{{ $theme->updated_at }}</td>
                     <td style="display: flex; justify-content: space-around">
-                        <a href="#">
+                        <a href="{{ route('admin.themes.edit', ['theme' => $theme])}}">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="#">
+                        <a href="{{ route('admin.themes.show', ['theme' => $theme])}}">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>

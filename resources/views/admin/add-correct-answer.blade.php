@@ -75,6 +75,9 @@
                 <div class="form-group">
                     <select
                         id="correct_answer"
+                        @error('correct_answer')
+                        style="border: red 1px solid;"
+                        @enderror
                         name="correct_answer"
                     >
                         <option value="0">Укажите номер правильного ответа</option>
@@ -92,6 +95,16 @@
                             4
                         </option>
                     </select>
+                    @if($errors->has('correct_answer'))
+                        @foreach($errors->get('correct_answer') as $error)
+                            <span
+                                style="color: red;
+                                    height: 2px;width: 150px;
+                                    margin-left: 20px;">
+                                    {{ $error }}
+                                </span>
+                        @endforeach
+                    @endif
                 </div>
                 <input type="hidden"
                        id="quest_number"

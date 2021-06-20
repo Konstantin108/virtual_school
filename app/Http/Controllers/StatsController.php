@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ThemeStatusEnum;
 use App\Models\Rate;
 use App\Models\Theme;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,9 @@ class StatsController extends Controller
     {
         $id = Auth::user()->id;
         $name = Auth::user()->name;
-        $count = Theme::select()->count();
+        $count = Theme::select()
+            ->where('status', ThemeStatusEnum::PUBLISHED)
+            ->count();
         $rate = Rate::where([
             ['user_id', $id]
         ])
@@ -39,6 +42,7 @@ class StatsController extends Controller
             'id' => $id
         ])
             ->with('themes', Theme::query()
+                ->where('status', ThemeStatusEnum::PUBLISHED)
                 ->get());
     }
 }

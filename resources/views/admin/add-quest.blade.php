@@ -29,6 +29,9 @@
                     <select
                         class="form-control"
                         id="theme_id"
+                        @error('theme_id')
+                        style="border: red 1px solid;"
+                        @enderror
                         name="theme_id"
                     >
                         <option value="0">Укажите тему, к которой добавляете вопрос</option>
@@ -38,17 +41,33 @@
                             </option>
                         @endforeach
                     </select>
+                    @if($errors->has('theme_id'))
+                        @foreach($errors->get('theme_id') as $error)
+                            <span
+                                style="color: red;
+                                    height: 2px;width: 150px;
+                                    margin-left: 20px;">
+                                    {{ $error }}
+                                </span>
+                        @endforeach
+                    @endif
                 </div>
-
-
                 <div class="form-group">
                     <label for="text">Вопрос</label>
                     <input type="text"
                            id="text"
                            name="text"
+                           @error('text')
+                           style="border: red 1px solid;"
+                           @enderror
                            class="form-control"
                            autocomplete="off"
                            value="{{old('text')}}">
+                    @if($errors->has('text'))
+                        @foreach($errors->get('text') as $error)
+                            {{ $error }}
+                        @endforeach
+                    @endif
                 </div>
                 <b>Варианты ответов:</b>
                 <br>
@@ -58,36 +77,68 @@
                     <input type="text"
                            id="answer_1"
                            name="answer_1"
+                           @error('answer_1')
+                           style="border: red 1px solid;"
+                           @enderror
                            class="form-control"
                            autocomplete="off"
                            value="{{old('answer_1')}}">
+                    @if($errors->has('answer_1'))
+                        @foreach($errors->get('answer_1') as $error)
+                            {{ $error }}
+                        @endforeach
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="answer_2">Вариант ответа №2</label>
                     <input type="text"
                            id="answer_2"
                            name="answer_2"
+                           @error('answer_2')
+                           style="border: red 1px solid;"
+                           @enderror
                            class="form-control"
                            autocomplete="off"
                            value="{{old('answer_2')}}">
+                    @if($errors->has('answer_2'))
+                        @foreach($errors->get('answer_2') as $error)
+                            {{ $error }}
+                        @endforeach
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="answer_3">Вариант ответа №3</label>
                     <input type="text"
                            id="answer_3"
                            name="answer_3"
+                           @error('answer_3')
+                           style="border: red 1px solid;"
+                           @enderror
                            class="form-control"
                            autocomplete="off"
                            value="{{old('answer_3')}}">
+                    @if($errors->has('answer_3'))
+                        @foreach($errors->get('answer_3') as $error)
+                            {{ $error }}
+                        @endforeach
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="answer_4">Вариант ответа №4</label>
                     <input type="text"
                            id="answer_4"
                            name="answer_4"
+                           @error('answer_4')
+                           style="border: red 1px solid;"
+                           @enderror
                            class="form-control"
                            autocomplete="off"
                            value="{{old('answer_4')}}">
+                    @if($errors->has('answer_4'))
+                        @foreach($errors->get('answer_4') as $error)
+                            {{ $error }}
+                        @endforeach
+                    @endif
                 </div>
                 <input type="hidden"
                        id="quest_number"
