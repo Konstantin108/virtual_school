@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div style="min-width: 200px; height: 30px; margin-left: 76px;">
+        <div style="min-width: 200px; height: 30px; margin-left: 50%;">
             @if(session()->has('success'))
                 <div class="alert alert-success">{{session()->get('success')}}</div>
             @elseif(session()->has('error'))
@@ -59,11 +59,11 @@
                     </td>
                     <td>
                         @if($theme->status == 'published')
-                            <p style="color: green">опубликовано</p>
+                            <span style="color: green">опубликовано</span>
                         @elseif($theme->status == 'blocked')
-                            <p style="color: indianred">заблокировано</p>
+                            <span style="color: indianred">заблокировано</span>
                         @else
-                            <p style="color: blue">на модерации</p>
+                            <span style="color: blue">на модерации</span>
                         @endif
                     </td>
                     <td>{{ $theme->created_at }}</td>

@@ -42,9 +42,9 @@
                     <td>{{ $user->updated_at }}</td>
                     <td>
                         @if($user->is_admin)
-                            <p style="color: green">да</p>
+                            <span style="color: green">да</span>
                         @else
-                            <p style="color: indianred">нет</p>
+                            <span style="color: indianred">нет</span>
                         @endif
                     </td>
                     <td style="display: flex; justify-content: space-around">

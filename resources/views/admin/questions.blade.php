@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div style="min-width: 200px; height: 30px; margin-left: 76px;">
+        <div style="min-width: 200px; height: 30px; margin-left: 50%;">
             @if(session()->has('success'))
                 <div class="alert alert-success">{{session()->get('success')}}</div>
             @elseif(session()->has('error'))
@@ -43,7 +43,7 @@
                     <td>{{ $quest->theme_id }}</td>
                     <td>{{ $quest->text }}</td>
                     <td style="display: flex; justify-content: space-around">
-                        <a href="#">
+                        <a href="{{ route('admin.questions.edit', ['question' => $quest])}}">
                             <i class="fas fa-edit"></i>
                         </a>
                         <a href="{{ route('deleteQuest', ['id' => $quest->id]) }}">

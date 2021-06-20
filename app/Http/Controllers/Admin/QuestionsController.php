@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateQuestRequest;
+use App\Http\Requests\EditQuestRequest;
 use App\Http\Requests\SaveCorrectAnswerRequest;
 use App\Models\Quest;
 use App\Models\Theme;
@@ -24,7 +25,7 @@ class QuestionsController extends Controller
         return view('admin.questions', [
             'questions' => $questions,
             'themes' => $themes,
-            'count' => $count
+            'count' => $count,
         ]);
     }
 
@@ -54,6 +55,36 @@ class QuestionsController extends Controller
             'quest' => $quest,
             'questions' => $questions
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param EditQuestRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(EditQuestRequest $request)
+    {
+        $data = $request->only([
+            'id',
+            'theme_id',
+            'text',
+            'answer_1',
+            'answer_2',
+            'answer_3',
+            'answer_4',
+            'quest_number',
+            'correct_answer'
+        ]);
+        $thisId = $data['id'];
+        $question = Quest::find($thisId);
+        $question = $question->fill($data)->save();
+        if ($question) {
+            return redirect()->route('addCorrectAnswer', [
+                'id' => $thisId
+            ]);
+        }
+        return back();
     }
 
     /**
@@ -105,7 +136,7 @@ class QuestionsController extends Controller
         $quest = $quest->fill($data)->save();
         if ($quest) {
             return redirect()->route('admin.questions.index')
-                ->with('success', __('messages.admin.questions.create.success'));;
+                ->with('success', __('messages.admin.questions.create.success'));
         }
         return back()
             ->with('error', __('messages.questions.themes.create.fail'));
@@ -126,23 +157,16 @@ class QuestionsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $themes = Theme::all()->push();
+        $quest = Quest::findOrFail($id);
+        return view('admin.edit-quest', [
+            'question' => $quest,
+            'themes' => $themes
+        ]);
     }
 
     /**
