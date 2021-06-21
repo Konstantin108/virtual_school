@@ -26,14 +26,15 @@ class EditUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'min:2'],
             'email' => ['required', 'string', 'min:2'],
-            'is_admin' => ['required', 'string', 'min:1']
+            'is_admin' => ['required', 'string', 'min:1'],
+            'rating' => ['required', 'int', 'min:0']
         ];
     }
 
     public function messages()
     {
         return [
-            'required' =>   'Поле :attribute обязательно для заполнения.'
+            'required' =>   'Поле :attribute обязательно для заполнения',
         ];
     }
 
@@ -41,7 +42,8 @@ class EditUserRequest extends FormRequest
     {
         return [
             'name' => 'имя пользователя',
-            'email' => 'E-Mail адрес'
+            'email' => 'E-Mail адрес',
+            'rating' => 'рейтинг пользователя'
         ];
     }
 }

@@ -28,9 +28,10 @@
                            id="name"
                            name="name"
                            @error('name')
-                           style="border: red 1px solid;"
+                           style="border: red 1px solid; width: 500px;"
                            @enderror
                            class="form-control"
+                           style="width: 500px;"
                            autocomplete="off"
                            value="{{ $user->name }}">
                     @if($errors->has('name'))
@@ -45,13 +46,38 @@
                            id="email"
                            name="email"
                            @error('email')
-                           style="border: red 1px solid;"
+                           style="border: red 1px solid; width: 500px;"
                            @enderror
                            class="form-control"
+                           style="width: 500px;"
                            autocomplete="off"
                            value="{{ $user->email }}">
                     @if($errors->has('email'))
                         @foreach($errors->get('email') as $error)
+                            {{ $error }}
+                        @endforeach
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="title">Рейтинг пользователя</label>
+                    <div style="display: flex;">
+                        <input type="number"
+                               id="rating"
+                               name="rating"
+                               max="{{ $count }}"
+                               min="0"
+                               @error('rating')
+                               style="border: red 1px solid; width: 100px; margin-top: 2px;"
+                               @enderror
+                               class="form-control"
+                               style="width: 100px; margin-top: 2px;"
+                               autocomplete="off"
+                               value="{{ $user->rating }}">
+                        <p style="margin-left: 10px; width: 450px; font-size: 14px">максимальный рейтинг не может превышать
+                            количество опубликованных тем({{ $count }}шт.)</p>
+                    </div>
+                    @if($errors->has('rating'))
+                        @foreach($errors->get('rating') as $error)
                             {{ $error }}
                         @endforeach
                     @endif

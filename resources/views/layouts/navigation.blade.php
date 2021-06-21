@@ -146,7 +146,7 @@
                     </x-responsive-nav-link>
                 @else
                     <x-responsive-nav-link :href="route('register')">
-                     {{ __('Профиль') }}
+                        {{ __('Профиль') }}
                     </x-responsive-nav-link>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

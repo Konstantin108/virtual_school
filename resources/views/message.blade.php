@@ -33,10 +33,21 @@
                             name="problem_theme"
                         >
                             <option value="0">Выберите проблему</option>
-                            <option value="Неточность, ошибки в учебном материале">Неточность, ошибки в учебном
-                                материале
+                            <option value="Неточность, ошибки в учебном материале">
+                                Неточность, ошибки в учебном материале
                             </option>
-                            <option value="Техническая проблема">Техническая проблема</option>
+                            <option value="Техническая проблема">
+                                Техническая проблема
+                            </option>
+                            <option value="Жалоба">
+                                Хочу оставить жалобу
+                            </option>
+                            <option value="Предложение">
+                                Хочу оставить предложение
+                            </option>
+                            <option value="Благодарность">
+                                Хочу оставить благодарность
+                            </option>
                         </select>
                         @if($errors->has('problem_theme'))
                             @foreach($errors->get('problem_theme') as $error)
@@ -68,6 +79,9 @@
                                     {{$theme->title}}
                                 </option>
                             @endforeach
+                            <option value="Касается работы сайта в целом" style="background-color: lightskyblue">
+                                Касается работы сайта в целом
+                            </option>
                         </select>
                         @if($errors->has('theme_title'))
                             @foreach($errors->get('theme_title') as $error)

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ThemeStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditUserRequest;
+use App\Models\Theme;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,8 +69,12 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        $count = Theme::all()
+            ->where('status', ThemeStatusEnum::PUBLISHED)
+            ->count();
         return view('admin.edit-user', [
-            'user' => $user
+            'user' => $user,
+            'count' => $count
         ]);
     }
 
@@ -77,7 +83,7 @@ class UsersController extends Controller
      *
      * @param EditUserRequest $request
      * @param User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(EditUserRequest $request, User $user)
     {
