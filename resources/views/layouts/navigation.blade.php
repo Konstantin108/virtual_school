@@ -66,8 +66,7 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <!-- ссылку на профиль нужно изменить -->
-                            <x-dropdown-link :href="route('register')" :active="request()->routeIs('register')">
+                            <x-dropdown-link :href="route('account.index')" :active="request()->routeIs('account.index')">
                                 {{ __('Профиль') }}
                             </x-dropdown-link>
                             <!-- Authentication -->
@@ -145,7 +144,7 @@
                         {{ __('Регистрация') }}
                     </x-responsive-nav-link>
                 @else
-                    <x-responsive-nav-link :href="route('register')">
+                    <x-responsive-nav-link :href="route('account.index')">
                         {{ __('Профиль') }}
                     </x-responsive-nav-link>
                     <form method="POST" action="{{ route('logout') }}">

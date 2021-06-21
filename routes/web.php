@@ -9,6 +9,7 @@ use App\Http\Controllers\QuestController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\ThemeController;
+use \App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,7 @@ Route::get('/', function () {
 //Route::view('/', 'home')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
+
     //for admin
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::resource('/themes', AdminThemesController::class);
@@ -37,36 +39,42 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/messages', AdminMessagesController::class);
     });
 
-    Route::get('admin/questions/addCorrectAnswer/{id}', [AdminQuestionsController::class, 'addCorrectAnswer'])
-        ->where('id', '\d+')
-        ->name('addCorrectAnswer');
+    //for admin
+    Route::group(['middleware' => 'admin'], function () {
+        Route::get('admin/questions/addCorrectAnswer/{id}', [AdminQuestionsController::class, 'addCorrectAnswer'])
+            ->where('id', '\d+')
+            ->name('addCorrectAnswer');
 
-    Route::post('admin/questions/saveCorrectAnswer', [AdminQuestionsController::class, 'saveCorrectAnswer'])
-        ->name('saveCorrectAnswer');
+        Route::post('admin/questions/saveCorrectAnswer', [AdminQuestionsController::class, 'saveCorrectAnswer'])
+            ->name('saveCorrectAnswer');
 
-    Route::get('admin/themes/deleteTheme/{id}', [AdminThemesController::class, 'deleteTheme'])
-        ->where('id', '\d+')
-        ->name('deleteTheme');
+        Route::get('admin/themes/deleteTheme/{id}', [AdminThemesController::class, 'deleteTheme'])
+            ->where('id', '\d+')
+            ->name('deleteTheme');
 
-    Route::get('admin/questions/deleteQuest/{id}', [AdminQuestionsController::class, 'deleteQuest'])
-        ->where('id', '\d+')
-        ->name('deleteQuest');
+        Route::get('admin/questions/deleteQuest/{id}', [AdminQuestionsController::class, 'deleteQuest'])
+            ->where('id', '\d+')
+            ->name('deleteQuest');
 
-    Route::get('admin/messages/deleteMessage/{id}', [AdminMessagesController::class, 'deleteMessage'])
-        ->where('id', '\d+')
-        ->name('deleteMessage');
+        Route::get('admin/messages/deleteMessage/{id}', [AdminMessagesController::class, 'deleteMessage'])
+            ->where('id', '\d+')
+            ->name('deleteMessage');
 
-    Route::get('admin/users/deleteUser/{id}', [AdminUsersController::class, 'deleteUser'])
-        ->where('id', '\d+')
-        ->name('deleteUser');
+        Route::get('admin/users/deleteUser/{id}', [AdminUsersController::class, 'deleteUser'])
+            ->where('id', '\d+')
+            ->name('deleteUser');
 
-    Route::get('admin/questions/thisThemeQuestions/{id}', [AdminQuestionsController::class, 'thisThemeQuestions'])
-        ->where('id', '\d+')
-        ->name('thisThemeQuestions');
+        Route::get('admin/questions/thisThemeQuestions/{id}', [AdminQuestionsController::class, 'thisThemeQuestions'])
+            ->where('id', '\d+')
+            ->name('thisThemeQuestions');
 
-    Route::get('admin/questions/thisThemeAddQuest/{id}', [AdminQuestionsController::class, 'thisThemeAddQuest'])
-        ->where('id', '\d+')
-        ->name('thisThemeAddQuest');
+        Route::get('admin/questions/thisThemeAddQuest/{id}', [AdminQuestionsController::class, 'thisThemeAddQuest'])
+            ->where('id', '\d+')
+            ->name('thisThemeAddQuest');
+    });
+
+    /* маршрут на страницу профиля: account */
+    Route::resource('/account',AccountController::class);
 });
 
 /* тестовый маршрут: dashboard */
