@@ -26,7 +26,7 @@
                         {{ __('Рейтинг') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" style="position:relative;">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('message')" :active="request()->routeIs('message')">
                         {{ __('Обратная связь') }}
                     </x-nav-link>
@@ -35,8 +35,8 @@
 
             @if(Auth::user() && Auth::user()->is_admin)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('admin.themes.index')" :active="request()->routeIs('register')">
-                        <b style="color: firebrick; font-size: 20px">{{ __('Админка') }}</b>
+                    <x-nav-link :href="route('admin.themes.index')" :active="request()->routeIs('admin.themes.index')">
+                        {{ __('Управление') }}
                     </x-nav-link>
                 </div>
             @endif
@@ -66,6 +66,10 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            <!-- ссылку на профиль нужно изменить -->
+                            <x-dropdown-link :href="route('register')" :active="request()->routeIs('register')">
+                                {{ __('Профиль') }}
+                            </x-dropdown-link>
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -110,6 +114,15 @@
             <x-responsive-nav-link :href="route('rating')" :active="request()->routeIs('rating')">
                 {{ __('Рейтинг') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('message')" :active="request()->routeIs('message')">
+                {{ __('Обратная связь') }}
+            </x-responsive-nav-link>
+            @if(Auth::user() && Auth::user()->is_admin)
+                <x-responsive-nav-link :href="route('admin.themes.index')"
+                                       :active="request()->routeIs('admin.themes.index')">
+                    {{ __('Управление') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
 
@@ -132,6 +145,9 @@
                         {{ __('Регистрация') }}
                     </x-responsive-nav-link>
                 @else
+                    <x-responsive-nav-link :href="route('register')">
+                     {{ __('Профиль') }}
+                    </x-responsive-nav-link>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
