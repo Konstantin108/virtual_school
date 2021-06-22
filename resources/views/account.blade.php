@@ -21,7 +21,7 @@
                         Данные пользователя
                     </div>
                     <div style="display: flex; padding: 10px;">
-                        <div>
+                        <div style="margin-right: 30px;">
                             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                 Имя пользователя
                                 <b>
@@ -49,7 +49,12 @@
                         </div>
                         <div style="display: flex; flex-direction: column; justify-content: space-between;">
                             <div style="display: flex; justify-content: center; align-items: center">
-                                <img src="{{ \Storage::disk('public')->url( $user->avatar) }}" alt="avatar" style="width: 140px;">
+                                @if($user->avatar)
+                                    <img src="{{ \Storage::disk('public')->url( $user->avatar) }}" alt="avatar"
+                                         style="width: 140px;">
+                                @else
+                                    <img src="img/no_photo.jpg" alt="avatar" style="width: 140px;">
+                                @endif
                             </div>
                             <div style="display: flex;
                                         justify-content: center;
@@ -74,7 +79,6 @@
         <div>
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
 
 
                     <div class="p-6 bg-gray-100 border-b border-gray-200">

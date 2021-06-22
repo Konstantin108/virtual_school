@@ -19,7 +19,7 @@
                           enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div>
+                        <div style="margin-right: 30px;">
                             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                 Имя пользователя
                                 <p>
@@ -34,6 +34,13 @@
                                         value="{{ $user->name }}"
                                     >
                                 </p>
+                                <div style="height: 30px;">
+                                    @if($errors->has('name'))
+                                        @foreach($errors->get('name') as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                    @endif
+                                </div>
                             </div>
                             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                 E-Mail адрес
@@ -48,15 +55,23 @@
                                            value="{{ $user->email }}"
                                     >
                                 </p>
+                                <div style="height: 30px;">
+                                    @if($errors->has('email'))
+                                        @foreach($errors->get('email') as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: column; justify-content: space-between;">
                             <div style="display: flex; justify-content: center; align-items: center">
-                                <img src="{{\Storage::disk('public')->url($user->avatar)}}"
-                                     alt="avatar"
-                                     style="width: 140px"
-                                >
-
+                                @if($user->avatar)
+                                    <img src="{{ \Storage::disk('public')->url( $user->avatar) }}" alt="avatar"
+                                         style="width: 140px;">
+                                @else
+                                    <img src="/img/no_photo.jpg" alt="avatar" style="width: 140px;">
+                                @endif
                             </div>
                             <input type="file" id="avatar" name="avatar" class="form-control">
                             <div style="display: flex;
@@ -67,7 +82,6 @@
                             >
                                 <input type="hidden" id="password" name="password" value="{{ $user->password }}">
                                 <input type="hidden" id="id" name="id" value="{{ $user->id }}">
-
                                 <x-button class="ml-4" type="submit">Сохранить</x-button>
                                 <x-btn-link class="sm:m-2 lg:m-6" href="{{ route('account.index') }}">
                                     {{ __('Вернуться') }}
@@ -81,6 +95,5 @@
 
         </div>
     </div>
-
 
 </x-app-layout>

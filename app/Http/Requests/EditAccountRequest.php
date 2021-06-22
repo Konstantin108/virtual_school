@@ -33,14 +33,14 @@ class EditAccountRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' =>   'Нельзя оставлять поле :attribute пустым',
+            'required' =>   'Введите :attribute',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'имя пользователя',
+            'name' => 'имя',
             'email' => 'E-Mail адрес',
         ];
     }
