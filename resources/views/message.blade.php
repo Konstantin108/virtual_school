@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-gray-50 border-b border-gray-200">
+                <div class="p-6 bg-gray-100 border-b border-gray-200">
                     Если вы нашли неточность в учебных материалах или у вас имеются технические проблемы, напишите
                     нам об этом
                 </div>
@@ -24,7 +24,7 @@
             <input type="hidden" value="{{ Auth::user()->name }}" id="user_name" name="user_name">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-gray-50 border-b border-gray-200">
+                    <div class="p-6 bg-gray-100 border-b border-gray-200">
                         <select
                             id="problem_theme"
                             @error('problem_theme')
@@ -65,7 +65,7 @@
             <br>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-gray-50 border-b border-gray-200">
+                    <div class="p-6 bg-gray-100 border-b border-gray-200">
                         <select
                             id="theme_title"
                             @error('theme_title')
@@ -99,7 +99,7 @@
             <br>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-gray-50 border-b border-gray-200">
+                    <div class="p-6 bg-gray-100 border-b border-gray-200">
                         Подробно изложите суть проблемы
                         @if($errors->has('text'))
                             @foreach($errors->get('text') as $error)
