@@ -144,7 +144,7 @@
                         {{ __('Регистрация') }}
                     </x-responsive-nav-link>
                 @else
-                    <x-responsive-nav-link :href="route('account.index')">
+                    <x-responsive-nav-link :href="route('account.index')" :active="request()->routeIs('account.index')">
                         {{ __('Профиль') }}
                     </x-responsive-nav-link>
                     <form method="POST" action="{{ route('logout') }}">
