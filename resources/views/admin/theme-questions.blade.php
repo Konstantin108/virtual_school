@@ -24,7 +24,8 @@
             <tr>
                 <th style="width: 60px;">#ID</th>
                 <th style="min-width: 120px;">ID темы</th>
-                <th style="width: 86%;">текст</th>
+                <th style="width: 50%;">текст</th>
+                <th style="width: 50%;">правильный ответ</th>
                 <th style="display: flex; justify-content: space-around; max-width: 100px">действие</th>
             </tr>
             </thead>
@@ -34,7 +35,14 @@
                 <tr>
                     <td style="width: 60px;">{{ $quest->id }}</td>
                     <td style="min-width: 120px;">{{ $quest->theme_id }}</td>
-                    <td style="width: 86%;">{{ $quest->text }}</td>
+                    <td style="width: 50%;">{{ $quest->text }}</td>
+                    <td style="width: 50%;">
+                        @if($quest->correct_answer != 'undefined')
+                            <span> {{ $quest->correct_answer }}</span>
+                        @else
+                            <span style="color: red">правильный ответ не указан</span>
+                        @endif
+                    </td>
                     <td style="display: flex; justify-content: space-around; max-width: 100px">
                         <a href="{{ route('admin.questions.edit', ['question' => $quest])}}">
                             <i class="fas fa-edit"></i>

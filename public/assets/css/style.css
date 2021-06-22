@@ -162,11 +162,11 @@
 }
 
 .text_in_acc{
-    min-width: 220px;
+    width: 40%;
 }
 
 .type_prob_in_acc{
-    min-width: 180px;
+    min-width: 187px;
 }
 
 /*.type_in_acc{*/
@@ -174,7 +174,7 @@
 /*}*/
 
 .stat_w_in_acc{
-    width: 100px;
+    width: 120px;
 }
 
 .stat_time_in_acc{
@@ -187,8 +187,8 @@
 }
 
 .time_pa_in_acc{
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .empty_in_acc{

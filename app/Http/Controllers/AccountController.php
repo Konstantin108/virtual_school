@@ -100,8 +100,18 @@ class AccountController extends Controller
             'id',
             'name',
             'email',
-            'password'
+            'password',
+            'avatar'
         ]);
+
+        if($request->hasFile('avatar')){
+            $image = $request->file('avatar');
+            $originalExt = $image->getClientOriginalExtension();
+            $fileName = uniqid();
+            $fileLink = $image->storeAs('users', $fileName . '.' . $originalExt, 'public');
+            $data['avatar'] = $fileLink;
+        }
+
         $thisId = $data['id'];
         $user = User::find($thisId);
         $user = $user->fill($data)->save();

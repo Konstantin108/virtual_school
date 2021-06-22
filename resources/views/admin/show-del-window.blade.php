@@ -64,7 +64,8 @@
                 <tr>
                     <th style="width: 60px;">#ID</th>
                     <th style="width: 90px;">ID темы</th>
-                    <th>текст вопроса</th>
+                    <th style="width: 50%;">текст вопроса</th>
+                    <th style="width: 50%;">правильный ответ</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,7 +76,14 @@
                         <tr>
                             <td style="width: 60px;">{{ $quest->id }}</td>
                             <td style="width: 90px;">{{ $quest->theme_id }}</td>
-                            <td>{{ $quest->text }}</td>
+                            <td style="width: 50%;">{{ $quest->text }}</td>
+                            <td style="width: 50%;">
+                                @if($quest->correct_answer != 'undefined')
+                                    <span> {{ $quest->correct_answer }}</span>
+                                @else
+                                    <span style="color: red">правильный ответ не указан</span>
+                                @endif
+                            </td>
                         </tr>
                     @endif
                 @empty
