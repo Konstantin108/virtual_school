@@ -59,8 +59,13 @@
                 </div>
                 <div class="form-group">
                     <label for="text">Текст обращения</label>
-                    <div class="form-control">
-                        <p>{{ $message->text }}</p>
+                    <div style="min-height: 30px;
+                                background-color: white;
+                                padding-left: 10px;
+                                border: 1px solid grey;
+                                border-radius: 8px;
+                        ">
+                        {{ $message->text }}
                     </div>
                 </div>
                 <div style="display: flex; height: 80px; width: 560px; justify-content: space-between">

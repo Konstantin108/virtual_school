@@ -28,7 +28,7 @@ class MessageRequest extends FormRequest
             'user_name' => ['required', 'string', 'min:2'],
             'problem_theme' => ['required', 'string', 'min:2'],
             'theme_title' => ['required', 'string', 'min:2'],
-            'text' => ['required', 'string', 'min:2'],
+            'text' => ['required', 'string', 'min:1'],
             'created_at' => ['required', 'string', 'min:2'],
             'updated_at' => ['required', 'string', 'min:2']
         ];

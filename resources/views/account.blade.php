@@ -32,6 +32,10 @@
                 <h3>{{ $user->updated_at }}</h3>
                 <br>
 
+                <a href="{{ route('account.edit', ['account' => $user->id]) }}">
+                    Настройки профиля
+                </a>
+
                 <div class="py-12">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div>Ваши обращения({{ $count }}шт.)</div>
@@ -41,59 +45,86 @@
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                             <div class="row">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" style="border: 1px solid black">
                                     <thead>
                                     <tr>
-                                        <th class="text_in_tbl border_f_tbl">#ID</th>
-                                        <th class="stl_f_title_in_tbl border_f_tbl">тип обращения</th>
-                                        <th class="text_in_tbl update_in_tbl border_f_tbl">объект обращения</th>
-                                        <th class="text_in_tbl update_in_tbl border_f_tbl">дата создания</th>
-                                        <th class="text_in_tbl update_in_tbl border_f_tbl">дата обновления</th>
-                                        <th class="text_in_tbl update_in_tbl border_f_tbl">статус</th>
-                                        <th style="width: 150px;" class="text_in_tbl">ответственный</th>
+                                        <th class="text_in_tbl border_b_in_acc border_f_tbl">#ID</th>
+                                        <th class="border_f_tbl border_b_in_acc type_prob_in_acc text_in_tbl">тип
+                                            обращения
+                                        </th>
+                                        <th class="text_in_tbl border_b_in_acc border_f_tbl text_in_acc">текст
+                                            обращения
+                                        </th>
+                                        <th class="text_in_tbl border_b_in_acc border_f_tbl stat_time_in_acc time_pa_in_acc">
+                                            дата создания
+                                        </th>
+                                        <th class="text_in_tbl border_b_in_acc border_f_tbl stat_time_in_acc time_pa_in_acc">
+                                            дата
+                                            обновления
+                                        </th>
+                                        <th class="text_in_tbl border_b_in_acc border_f_tbl stat_w_in_acc">статус</th>
+                                        <th class="text_in_tbl border_b_in_acc stat_w_in_acc">ответственный</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
                                     @forelse($messages as $message)
                                         <tr>
-                                            <td class="text_in_tbl border_f_tbl">{{ $message->id }}</td>
-                                            <td class="stl_f_title_in_tbl border_f_tbl">{{  $message->problem_theme }}</td>
-                                            <td class="stl_f_title_in_tbl border_f_tbl">{{  $message->theme_title }}</td>
-                                            <td class="text_in_tbl update_in_tbl border_f_tbl">{{  $message->created_at->format('d F Y') }}</td>
-                                            <td class="text_in_tbl update_in_tbl border_f_tbl">{{  $message->updated_at->format('d F Y') }}</td>
-                                            <td class="text_in_tbl update_in_tbl border_f_tbl">{{  $message->status }}</td>
-                                            <td style="width: 150px;" class="text_in_tbl">{{ $message->curator }}</td>
+                                            <td class="text_in_tbl border_f_tbl border_b_in_acc">{{ $message->id }}</td>
+                                            <td class="border_f_tbl border_b_in_acc type_prob_in_acc text_in_tbl">
+                                                @if($message->problem_theme == 'Неточность, ошибки в учебном материале')
+                                                    Ошибка в материалах
+                                                @else
+                                                    {{  $message->problem_theme }}
+                                                @endif
+                                            </td>
+                                            <td class="text_in_tbl border_f_tbl border_b_in_acc text_in_acc">
+                                                <a href="#" class="acc_link">
+                                                    {{  $message->text }}
+                                                </a>
+                                            </td>
+                                            <td class="text_in_tbl border_f_tbl border_b_in_acc stat_time_in_acc"
+                                                time_pa_in_acc>{{  $message->created_at->format('d F Y') }}</td>
+                                            <td class="text_in_tbl border_f_tbl border_b_in_acc stat_time_in_acc time_pa_in_acc">{{  $message->updated_at->format('d F Y') }}</td>
+                                            <td class="text_in_tbl border_f_tbl border_b_in_acc stat_w_in_acc">{{  $message->status }}</td>
+                                            <td class="text_in_tbl border_b_in_acc stat_w_in_acc">
+                                                @if($message->curator)
+                                                    {{ $message->curator }}
+                                                @else
+                                                    не назначен
+                                                @endif
+                                            </td>
                                         </tr>
                                     @empty
+                                        <tr>
+                                            <td></td>
+                                            <td>Здесь пока ничего нет</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
                                     @endforelse
 
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div style="display: flex">
-                    <div>
-                        <a href="{{ route('account.edit', ['account' => $user->id]) }}">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
 
-                            Настройки профиля
-
-                        </a>
-                    </div>
-
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-
-                        <x-dropdown-link :href="route('logout')"
-                                         onclick="event.preventDefault();
+                    <x-dropdown-link :href="route('logout')"
+                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                            {{ __('Выход') }}
-                        </x-dropdown-link>
-                    </form>
-                </div>
+                        {{ __('Выйти из аккаунта') }}
+                    </x-dropdown-link>
+                </form>
+
             </div>
 
         </div>
