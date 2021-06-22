@@ -13,8 +13,8 @@
     </div>
     <div class="py-12 justify-center justify-between">
         <div class="flex max-w-7xl mx-auto sm:p-4 lg:p-8 flex-wrap justify-center">
-            <div class="card border bg-red-100 sm:px-6 sm:m-2 lg:px-8 lg:m-4"
-                 style="width: 18rem; position: relative; height: 520px; background-color: orange"
+            <div class="card border bg-purple-300 sm:px-6 sm:m-2 lg:px-8 lg:m-4"
+                 style="width: 18rem; position: relative; height: 520px;"
             >
                 <img src="img/test.png" class="card-img-top" alt="test" style="margin-top: 14px; margin-bottom: 20px">
                 <div class="card-body">
