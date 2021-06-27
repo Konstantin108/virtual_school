@@ -24,12 +24,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*
-Route::get('/', function () {
-    return view('home')->name('home');
-});*/
-//Route::view('/', 'home')->name('home');
-
 Route::group(['middleware' => 'auth'], function () {
 
     //for admin
@@ -132,10 +126,6 @@ Route::get('/showSession', [QuestController::class, 'showSession'])
 /* сохранение результатов: saveResult */
 Route::get('/saveResult', [QuestController::class, 'saveResult'])
     ->name('saveResult');
-
-/* тестовый маршрут для просмотра данных в массиве rating */
-Route::get('/showRating', [QuestController::class, 'showRating'])
-    ->name('showRating');
 
 /* маршрут на страницу рейтинга: rating */
 Route::get('/rating', [RatingController::class, 'rating'])

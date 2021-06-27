@@ -178,21 +178,5 @@ class QuestController extends Controller
             return redirect()->route('home');
         }
     }
-
-    /**
-     * @return mixed
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public
-    function showRating()
-    {
-        $rating = Rate::select([
-            'theme_completed_id'
-        ])
-            ->get();
-        return view('rateTest', [
-            'rating' => $rating
-        ]);
-    }
 }
 
