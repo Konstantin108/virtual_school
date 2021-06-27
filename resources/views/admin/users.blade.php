@@ -65,10 +65,12 @@
                         @endif
                     </td>
                     <td style="display: flex; justify-content: space-around">
-                        @if($user->is_admin)
+                        @if($user->is_admin && $user->id == Auth::user()->id)
                             <a href="{{ route('adminEdit', ['id' => $user->id])}}">
                                 <i class="fas fa-edit"></i>
                             </a>
+                        @elseif($user->is_admin && $user->id != Auth::user()->id)
+                            запрещено
                         @else
                             <a href="{{ route('admin.users.edit', ['user' => $user])}}">
                                 <i class="fas fa-edit"></i>

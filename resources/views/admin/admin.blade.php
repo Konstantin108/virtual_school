@@ -53,20 +53,23 @@
                     </div>
                 </div>
                 <div>
-                    <a href="{{ route('adminEdit', ['id' => $user->id])}}"
-                       style="height: 30px;
-                   min-width: 100px;
-                   padding: 10px;
-                   background-color: #17A673;
-                   text-decoration: none;
-                   color: white;
-                   border-radius: 12px;"
-                    >
-                        редактировать
-                    </a>
+                    @if($user->id == Auth::user()->id)
+                        <a href="{{ route('adminEdit', ['id' => $user->id])}}"
+                           style="height: 30px;
+                               min-width: 100px;
+                               padding: 10px;
+                               margin-right: 20px;
+                               background-color: #17A673;
+                               text-decoration: none;
+                               color: white;
+                               border-radius: 12px;"
+                        >
+                            редактировать
+                        </a>
+                    @else
+                    @endif
                     <a href="{{ $previous }}"
                        style="height: 30px;
-                              margin-left: 20px;
                               min-width: 100px;
                               padding: 10px;
                               background-color: #cbcb0c;
