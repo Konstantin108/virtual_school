@@ -5,11 +5,13 @@
         </h2>
     </x-slot>
     <div class="block_f_msgs">
+
         @if(session()->has('success'))
             <div class="success_msgs">{{session()->get('success')}}</div>
         @elseif(session()->has('error'))
             <div class="fail_msgs">{{session()->get('fail')}}</div>
         @endif
+
     </div>
     <div class="py-12 justify-center justify-between">
         <div class="flex max-w-7xl mx-auto sm:p-4 lg:p-8 flex-wrap justify-center">

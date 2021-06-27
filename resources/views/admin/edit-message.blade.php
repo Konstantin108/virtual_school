@@ -46,7 +46,7 @@
                             <label for="user_id">ID пользователя:&nbsp;&nbsp;</label>
                             <b><span>{{ $message->user_id }}</span></b>
                         </div>
-                        <a href="#">
+                        <a href="{{ route('admin.users.show', ['user' => $message->user_id]) }}">
                             <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>

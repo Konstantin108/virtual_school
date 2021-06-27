@@ -19,9 +19,29 @@
     </div>
     <div class="row">
         <div class="col-6 offset-2">
-            <form method="post" action="{{ route('admin.users.update', ['user' => $user]) }}">
+            <form
+                method="post"
+                action="{{ route('admin.users.update', ['user' => $user]) }}"
+                enctype="multipart/form-data"
+            >
                 @csrf
                 @method('PUT')
+                <div class="form-group">
+                    <label for="avatar">Аватар пользователя</label>
+                    <div style="width: 300px;
+                                display:flex;
+                                justify-content: flex-start;
+                                margin-bottom: 20px;"
+                    >
+                        @if($user->avatar)
+                            <img src="{{ \Storage::disk('public')->url( $user->avatar) }}" alt="avatar"
+                                 style="width: 200px;">
+                        @else
+                            <img src="/img/no_photo.jpg" alt="avatar" style="width: 200px;">
+                        @endif
+                    </div>
+                    <input type="file" id="avatar" name="avatar" class="form-control" style="width: 500px;">
+                </div>
                 <div class="form-group">
                     <label for="title">Имя пользователя</label>
                     <input type="text"
@@ -73,7 +93,8 @@
                                style="width: 100px; margin-top: 2px;"
                                autocomplete="off"
                                value="{{ $user->rating }}">
-                        <p style="margin-left: 10px; width: 450px; font-size: 14px">максимальный рейтинг не может превышать
+                        <p style="margin-left: 10px; width: 450px; font-size: 14px">максимальный рейтинг не может
+                            превышать
                             количество опубликованных тем({{ $count }}шт.)</p>
                     </div>
                     @if($errors->has('rating'))
@@ -98,7 +119,7 @@
                 <br>
                 <button type="submit" class="btn btn-success">Сохранить</button>
                 <a
-                    href="{{ route('admin.users.index') }}"
+                    href="{{ $previous }}"
                     style="height: 30px;
                            margin-left: 20px;
                            min-width: 100px;

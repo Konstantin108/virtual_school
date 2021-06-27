@@ -45,15 +45,19 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                <img class="img-profile rounded-circle"
-                     src="{{ asset('assets2/img/undraw_profile.svg')}}">
+                @if(Auth::user()->avatar)
+                    <img src="{{ \Storage::disk('public')->url( Auth::user()->avatar) }}" alt="avatar"
+                         style="width: 40px; margin-left: 24px;">
+                @else
+                    <img src="{{ asset('assets2/img/undraw_profile.svg')}}" alt="avatar" style="width: 40px; margin-left: 24px;">
+                @endif
             </a>
             <!-- Dropdown - User Information -->
             <form class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                   method="POST" action="{{ route('logout') }}"
                   aria-labelledby="userDropdown">
                 @csrf
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ route('adminAccount', ['id' => Auth::user()->id]) }}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Профиль
                 </a>

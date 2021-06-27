@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\ThemeStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditUserRequest;
+use App\Models\Message;
 use App\Models\Theme;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -53,12 +54,19 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        $userId = $user->id;
+        $count = Message::all()
+            ->where('user_id', $userId)
+            ->count();
+        return view('admin.user', [
+            'user' => $user,
+            'count' => $count
+        ]);
     }
 
     /**
@@ -69,12 +77,14 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        $previous = $_SERVER['HTTP_REFERER'];
         $count = Theme::all()
             ->where('status', ThemeStatusEnum::PUBLISHED)
             ->count();
         return view('admin.edit-user', [
             'user' => $user,
-            'count' => $count
+            'count' => $count,
+            'previous' => $previous
         ]);
     }
 
@@ -88,6 +98,15 @@ class UsersController extends Controller
     public function update(EditUserRequest $request, User $user)
     {
         $data = $request->validated();
+
+        if ($request->hasFile('avatar')) {
+            $image = $request->file('avatar');
+            $originalExt = $image->getClientOriginalExtension();
+            $fileName = uniqid();
+            $fileLink = $image->storeAs('users', $fileName . '.' . $originalExt, 'public');
+            $data['avatar'] = $fileLink;
+        }
+
         $user = $user->fill($data);
         if ($user->save()) {
             return redirect()->route('admin.users.index')

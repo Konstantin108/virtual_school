@@ -4,12 +4,13 @@ use App\Http\Controllers\Admin\MessagesController as AdminMessagesController;
 use App\Http\Controllers\Admin\QuestionsController as AdminQuestionsController;
 use App\Http\Controllers\Admin\ThemesController as AdminThemesController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\QuestController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\ThemeController;
-use \App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,6 +72,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('admin/questions/thisThemeAddQuest/{id}', [AdminQuestionsController::class, 'thisThemeAddQuest'])
             ->where('id', '\d+')
             ->name('thisThemeAddQuest');
+
+        Route::get('admin/adminAccount/{id}', [AdminController::class, 'adminAccount'])
+            ->where('id', '\d+')
+            ->name('adminAccount');
+
+        Route::get('admin/adminEdit/{id}', [AdminController::class, 'adminEdit'])
+            ->where('id', '\d+')
+            ->name('adminEdit');
+
+        Route::post('admin/adminUpdate/{id}', [AdminController::class, 'adminUpdate'])
+            ->where('id', '\d+')
+            ->name('adminUpdate');
     });
 
     /* маршрут на страницу профиля: account */

@@ -43,7 +43,17 @@
             @forelse($users as $user)
                 <tr>
                     <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
+                    <td>
+                        @if($user->is_admin)
+                            <a href="{{ route('adminAccount', ['id' => $user->id]) }}">
+                                {{ $user->name }}
+                            </a>
+                        @else
+                            <a href="{{ route('admin.users.show', ['user' => $user]) }}">
+                                {{ $user->name }}
+                            </a>
+                        @endif
+                    </td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at }}</td>
                     <td>{{ $user->updated_at }}</td>
@@ -56,7 +66,9 @@
                     </td>
                     <td style="display: flex; justify-content: space-around">
                         @if($user->is_admin)
-                            запрещено
+                            <a href="{{ route('adminEdit', ['id' => $user->id])}}">
+                                <i class="fas fa-edit"></i>
+                            </a>
                         @else
                             <a href="{{ route('admin.users.edit', ['user' => $user])}}">
                                 <i class="fas fa-edit"></i>
