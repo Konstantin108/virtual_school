@@ -120,8 +120,7 @@ class QuestController extends Controller
     /**
      * @param Request $request
      */
-    public
-    function clearSession(Request $request)
+    public function clearSession(Request $request)
     {
         $request->session()->flush();
     }
@@ -129,14 +128,15 @@ class QuestController extends Controller
     /**
      * @param Request $request
      */
-    public
-    function showSession(Request $request)
+    public function showSession(Request $request)
     {
         dd($request->session()->all());
     }
 
-    public
-    function saveResult()
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveResult()
     {
         $dataTime = now();
         $redirectCompletedVal = Session::get('redirectToCompleted.value');

@@ -36,6 +36,10 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function adminEdit($id)
     {
         $previous = $_SERVER['HTTP_REFERER'];
