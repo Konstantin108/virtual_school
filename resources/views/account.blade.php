@@ -125,7 +125,9 @@
                                             @endif
                                         </td>
                                         <td class="text_in_tbl border_f_tbl border_b_in_acc text_in_acc">
-                                            <a href="#" class="acc_link">
+                                            <a href="{{ route('userMessageEdit', [
+                                                        'id' => $message->id
+                                                ]) }}" class="acc_link">
                                                 {{  $message->text }}
                                             </a>
                                         </td>

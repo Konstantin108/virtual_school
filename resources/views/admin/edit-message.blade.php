@@ -46,9 +46,15 @@
                             <label for="user_id">ID пользователя:&nbsp;&nbsp;</label>
                             <b><span>{{ $message->user_id }}</span></b>
                         </div>
-                        <a href="{{ route('admin.users.show', ['user' => $message->user_id]) }}">
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
+                        @if(in_array($message->user_id, $arr))
+                            <a href="{{ route('adminAccount', ['id' => $message->user_id]) }}">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        @else
+                            <a href="{{ route('admin.users.show', ['user' => $message->user_id]) }}">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <div class="form-group">
@@ -68,7 +74,7 @@
                         {{ $message->text }}
                     </div>
                 </div>
-                <div style="display: flex; height: 80px; width: 560px; justify-content: space-between">
+                <div style="display: flex; height: 80px; width: 700px; justify-content: space-between">
                     <div class="form-group">
                         <label for="created_at">Дата заведения</label>
                         <p>{{ $message->created_at }}</p>
@@ -77,12 +83,16 @@
                         <label for="updated_at">Дата обновления</label>
                         <p>{{ $message->updated_at }}</p>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="width: 300px;">
                         <label for="updated_at">Статус обращения</label>
                         @if($message->status == 'ожидание')
                             <p style="color: indianred">ожидает назначения</p>
                         @elseif($message->status == 'в работе')
                             <p style="color: blue">в работе</p>
+                        @elseif($message->status == 'выполнено')
+                            <p style="color: dodgerblue">выполнено</p>
+                        @elseif($message->status == 'отозвано')
+                            <p style="color: green">обращение отозвано</p>
                         @else
                             <p style="color: green">обращение закрыто</p>
                         @endif
@@ -94,21 +104,35 @@
                 <div style="display: flex; flex-direction: column">
                     @if(!$message->curator)
                         <div class="form_radio_btn_1 button_1">
-                            <x-input type="radio" name="status" id="published"
+                            <x-input type="radio" name="status" id="in_process"
                                      value="в работе" checked/>
-                            <label for="published">взять в работу</label>
+                            <label for="in_process">взять в работу</label>
+                        </div>
+                    @elseif($message->status == 'выполнено' ||
+                            $message->status == 'закрыто' ||
+                            $message->status == 'отозвано'
+                        )
+                        <div class="form_radio_btn_1 button_1">
+                            <x-input type="radio" name="status" id="in_process"
+                                     value="в работе" checked/>
+                            <label for="in_process">вернуть в работу</label>
                         </div>
                     @else
                         <div class="form_radio_btn_1 button_1">
-                            <x-input type="radio" name="status" id="published"
+                            <x-input type="radio" name="status" id="in_process"
                                      value="в работе" checked/>
-                            <label for="published">вернуть в работу</label>
+                            <label for="in_process">в работе</label>
                         </div>
                     @endif
                     <div class="form_radio_btn_1 button_1">
-                        <x-input type="radio" name="status" id="draft"
+                        <x-input type="radio" name="status" id="done"
+                                 value="выполнено"/>
+                        <label for="done">обращение выполнено</label>
+                    </div>
+                    <div class="form_radio_btn_1 button_1">
+                        <x-input type="radio" name="status" id="closed"
                                  value="закрыто"/>
-                        <label for="draft">закрыть обращение</label>
+                        <label for="closed">закрыть обращение</label>
                     </div>
                 </div>
                 <br>

@@ -14,7 +14,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     @forelse($users as $user)
                         <div style="display: flex">
-                            <div style="width: 100px;
+                            <div style="width: 200px;
                                         height: 60px;
                                         border-radius: 20px;
                                         display: flex;

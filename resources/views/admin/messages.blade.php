@@ -51,6 +51,8 @@
                             <span style="color: indianred">ожидает назначения</span>
                         @elseif($message->status == 'в работе')
                            <span style="color: blue">в работе</span>
+                        @elseif($message->status == 'выполнено')
+                            <span style="color: dodgerblue">выполнено</span>
                         @elseif($message->status == 'отозвано')
                             <span style="color: green">обращение отозвано</span>
                         @else

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditMessageRequest;
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,10 +66,18 @@ class MessagesController extends Controller
      */
     public function edit(Message $message)
     {
+        $arr = [];
+        $admins = User::all()
+            ->where('is_admin', 1)
+            ->push();
+        foreach ($admins as $admin){
+            $arr[] = $admin->id;
+        }
         $curator = Auth::user();
         return view('admin.edit-message', [
             'message' => $message,
-            'curator' => $curator
+            'curator' => $curator,
+            'arr' => $arr,
         ]);
     }
 

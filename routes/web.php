@@ -151,5 +151,18 @@ Route::get('/message', [MessageController::class, 'message'])
     ->middleware(['auth'])
     ->name('message');
 
+/* маршрут на страницу работы с обращением */
+Route::get('/userMessageEdit/{id}', [MessageController::class, 'userMessageEdit'])
+    ->middleware(['auth'])
+    ->where('id', '\d+')
+    ->name('userMessageEdit');
+
+/* маршрут для update message из аккаунта пользователя */
+Route::post('userMessageUpdate/{id}', [MessageController::class, 'userMessageUpdate'])
+    ->middleware(['auth'])
+    ->where('id', '\d+')
+    ->name('userMessageUpdate');
+
+/* рандомные темы(главная страница) */
 Route::get('/', [ThemeController::class, 'randomThemes'])
     ->name('home');
