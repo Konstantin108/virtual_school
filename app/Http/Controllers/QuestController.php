@@ -169,13 +169,17 @@ class QuestController extends Controller
             }
         }
         if (Auth::user() && !$redirectCompletedVal && !$redirectHomeVal) {
-            return redirect()->route('themes');
+            return redirect()->route('themes')
+                ->with('success', __('messages.themes.update.success'));
         } elseif (Auth::user() && $redirectCompletedVal && !$redirectHomeVal) {
-            return redirect()->route('completedThemes');
+            return redirect()->route('completedThemes')
+                ->with('success', __('messages.themes.update.success'));
         } elseif (Auth::user() && !$redirectCompletedVal && $redirectHomeVal) {
-            return redirect()->route('home');
+            return redirect()->route('home')
+                ->with('success', __('messages.themes.update.success'));
         } else {
-            return redirect()->route('home');
+            return redirect()->route('home')
+                ->with('success', __('messages.themes.create.success'));
         }
     }
 }

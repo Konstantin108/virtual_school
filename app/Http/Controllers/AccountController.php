@@ -32,13 +32,21 @@ class AccountController extends Controller
         $in_process = $messages
             ->where('status', 'в работе')
             ->count();
+        $is_done = $messages
+            ->where('status', 'выполнено')
+            ->count();
+        $is_back = $messages
+            ->where('status', 'отозвано')
+            ->count();
         return view('account', [
             'user' => $user,
             'messages' => $messages,
             'count' => $count,
             'ready' => $ready,
             'in_process' => $in_process,
-            'in_waiting' => $in_waiting
+            'in_waiting' => $in_waiting,
+            'is_done' => $is_done,
+            'is_back' => $is_back
         ]);
     }
 
@@ -104,7 +112,7 @@ class AccountController extends Controller
             'avatar'
         ]);
 
-        if($request->hasFile('avatar')){
+        if ($request->hasFile('avatar')) {
             $image = $request->file('avatar');
             $originalExt = $image->getClientOriginalExtension();
             $fileName = uniqid();

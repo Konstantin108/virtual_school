@@ -4,7 +4,15 @@
             {{ __('КУРСЫ ПОВЫШЕНИЯ КВАЛИФИКАЦИИ') }}
         </h2>
     </x-slot>
+    <div class="block_f_msgs">
 
+        @if(session()->has('success'))
+            <div class="success_msgs">{{session()->get('success')}}</div>
+        @elseif(session()->has('error'))
+            <div class="fail_msgs">{{session()->get('fail')}}</div>
+        @endif
+
+    </div>
     <h3 class="font-semibold text-xl text-gray-800 text-center font-bold leading-tight" style="margin-top: 10px;">
         Добро пожаловать в виртуальную школу
         @if(Auth::user())
