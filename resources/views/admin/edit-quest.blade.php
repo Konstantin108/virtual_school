@@ -31,7 +31,7 @@
                             @if($theme->id == $question->theme_id)
                                 <h3>{{ $theme->title }}</h3>
                             @endif
-                            @empty
+                        @empty
                         @endforelse
                     </div>
                 </div>
@@ -141,6 +141,19 @@
                        value="{{ $question->correct_answer }}">
                 <br>
                 <button type="submit" class="btn btn-success">Продолжить</button>
+                <a
+                    href="{{ $previous }}"
+                    style="height: 30px;
+                           margin-left: 20px;
+                           min-width: 100px;
+                           padding: 8px;
+                           background-color: #cbcb0c;
+                           text-decoration: none;
+                           color: white;
+                           border-radius: 8px;"
+                >
+                    назад
+                </a>
             </form>
         </div>
     </div>

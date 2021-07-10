@@ -71,10 +71,12 @@ class QuestionsController extends Controller
     {
         $themes = Theme::all()->push();
         $questions = Quest::all()->push();
+        $previous = $_SERVER['HTTP_REFERER'];
         return view('admin.theme-add-quest', [
             'themes' => $themes,
             'questions' => $questions,
-            'id' => $id
+            'id' => $id,
+            'previous' => $previous
         ]);
     }
 
@@ -197,9 +199,11 @@ class QuestionsController extends Controller
     {
         $themes = Theme::all()->push();
         $quest = Quest::findOrFail($id);
+        $previous = $_SERVER['HTTP_REFERER'];
         return view('admin.edit-quest', [
             'question' => $quest,
-            'themes' => $themes
+            'themes' => $themes,
+            'previous' => $previous
         ]);
     }
 

@@ -150,6 +150,19 @@
                        value="undefined">
                 <br>
                 <button type="submit" class="btn btn-success">Продолжить</button>
+                <a
+                    href="{{ route('admin.questions.index') }}"
+                    style="height: 30px;
+                           margin-left: 20px;
+                           min-width: 100px;
+                           padding: 8px;
+                           background-color: #cbcb0c;
+                           text-decoration: none;
+                           color: white;
+                           border-radius: 8px;"
+                >
+                    назад
+                </a>
             </form>
         </div>
     </div>
