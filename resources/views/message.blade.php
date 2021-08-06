@@ -117,9 +117,7 @@
                         margin-left: 20px;"
                         type="text"
                         name="text"
-                        id="text">
-                        {{old('text')}}
-                    </textarea>
+                        id="text">{{old('text')}}</textarea>
                 </div>
                 <input type="hidden" value="{{now()}}" name="created_at" id="updated_at">
                 <input type="hidden" value="{{now()}}" name="updated_at" id="updated_at">

@@ -44,8 +44,7 @@
                     <textarea type="text"
                               id="text"
                               name="text"
-                              class="form-control">{{ $theme->text }}
-                        </textarea>
+                              class="form-control">{{ $theme->text }}</textarea>
                     @if($errors->has('text'))
                         @foreach($errors->get('text') as $error)
                             {{ $error }}

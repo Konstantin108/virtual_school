@@ -79,8 +79,6 @@
         <div>
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-
                     <div class="p-6 bg-gray-100 border-b border-gray-200">
                         <div style="display: flex; justify-content: space-around;">
                             <div>Ваши обращения ({{ $count }}шт.)</div>
