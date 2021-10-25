@@ -1,0 +1,241 @@
+/*----------styles for radio buttons in theme----------*/
+
+.form_radio_btn {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.form_radio_btn input[type=radio] {
+    display: none;
+}
+
+.form_radio_btn label {
+    display: inline-block;
+    transition: 0.2s;
+    cursor: pointer;
+    padding: 0px 15px;
+    line-height: 34px;
+    border: 1px solid #999;
+    background-color: lightyellow;
+    border-radius: 6px;
+    user-select: none;
+    width: 500px;
+    margin-bottom: 4px;
+}
+
+/* Checked */
+.form_radio_btn input[type=radio]:checked + label {
+    background: #bbffbb;
+}
+
+/* Hover */
+.form_radio_btn label:hover {
+    color: #666;
+    background: #ffe0a6;
+}
+
+/* Disabled */
+.form_radio_btn input[type=radio]:disabled + label {
+    background: #efefef;
+    color: #666;
+}
+
+.block-for-btn {
+    width: 100%;
+    height: 50px;
+}
+
+/*----------styles for tbl in stats----------*/
+
+.stat_name {
+    text-transform: uppercase;
+}
+
+.stl_f_title_in_tbl {
+    width: 680px;
+}
+
+.update_in_tbl {
+    margin-left: 16px;
+    width: 170px;
+}
+
+.border_f_tbl {
+    border-right: 1px solid black;
+}
+
+.text_in_tbl {
+    margin-left: 2px;
+    margin-right: 2px;
+    text-align: center;
+}
+
+.block_f_msgs {
+    width: 100%;
+    height: 40px;
+    padding-left: 350px;
+    padding-top: 3px;
+}
+
+.success_msgs {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #3cae64;
+    border-radius: 12px;
+    border: 2px solid green;
+    max-width: 300px;
+}
+
+.fail_msgs {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #cd9696;
+    border-radius: 12px;
+    border: 2px solid red;
+    max-width: 300px;
+}
+
+/*----------styles for radio buttons in admin message edit----------*/
+
+.form_radio_btn_1 {
+    display: inline-block;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.form_radio_btn_1 input[type=radio] {
+    display: none;
+}
+
+.form_radio_btn_1 label {
+    transition: 0.2s;
+    display: inline-block;
+    cursor: pointer;
+    padding: 0px 15px;
+    line-height: 34px;
+    border: 1px solid #999;
+    background-color: white;
+    border-radius: 6px;
+    user-select: none;
+    width: 300px;
+    margin-bottom: 4px;
+}
+
+/* Checked */
+.form_radio_btn_1 input[type=radio]:checked + label {
+    /*background: #b8b8f1;*/
+    background: #d1e9d1;
+    /*color: white;*/
+}
+
+/* Hover */
+.form_radio_btn_1 label:hover {
+    color: #666;
+    background: #e9e2e2;
+}
+
+/* Disabled */
+.form_radio_btn_1 input[type=radio]:disabled + label {
+    background: white;
+    color: #666;
+}
+
+.block-for-btn_1 {
+    width: 100%;
+    height: 50px;
+}
+
+/*----------styles for tbl in account----------*/
+
+.stl_f_title_in_acc {
+    width: 200px;
+}
+
+.border_b_in_acc {
+    border-bottom: 1px solid black;
+}
+
+.id_w_in_acc {
+    min-width: 22px;
+}
+
+.text_in_acc {
+    width: 40%;
+}
+
+.type_prob_in_acc {
+    min-width: 187px;
+}
+
+/*.type_in_acc{*/
+/*    min-width: 200px;*/
+/*}*/
+
+.stat_w_in_acc {
+    width: 120px;
+}
+
+.stat_time_in_acc {
+    min-width: 110px;
+}
+
+.acc_link {
+    color: #2a96a5;
+    text-decoration-line: underline;
+}
+
+.time_pa_in_acc {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.empty_in_acc {
+    width: 1px;
+}
+
+.text_empty_in_acc {
+    text-align: center;
+}
+
+/*----------styles for radio buttons in user message edit----------*/
+
+.form_radio_btn_4 {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.form_radio_btn_4 input[type=radio] {
+    display: none;
+}
+
+.form_radio_btn_4 label {
+    transition: 0.2s;
+    display: inline-block;
+    cursor: pointer;
+    padding: 0px 15px;
+    line-height: 34px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    user-select: none;
+}
+
+/* Checked */
+.form_radio_btn_4 input[type=radio]:checked + label {
+    background: #ffe0a6;
+}
+
+/* Hover */
+.form_radio_btn_4 label:hover {
+    color: #666;
+    background-color: #e7f8fa;
+}
+
+/* Disabled */
+.form_radio_btn_4 input[type=radio]:disabled + label {
+    background: #efefef;
+    color: #666;
+}

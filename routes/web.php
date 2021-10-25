@@ -1,5 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\MessagesController as AdminMessagesController;
+use App\Http\Controllers\Admin\QuestionsController as AdminQuestionsController;
+use App\Http\Controllers\Admin\ThemesController as AdminThemesController;
+use App\Http\Controllers\Admin\UsersController as AdminUsersController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\QuestController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\StatsController;
+use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +24,135 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'auth'], function () {
+
+    //for admin
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
+        Route::resource('/themes', AdminThemesController::class);
+        Route::resource('/users', AdminUsersController::class);
+        Route::resource('/questions', AdminQuestionsController::class);
+        Route::resource('/messages', AdminMessagesController::class);
+    });
+
+    //for admin
+    Route::group(['middleware' => 'admin'], function () {
+        Route::get('admin/questions/addCorrectAnswer/{id}', [AdminQuestionsController::class, 'addCorrectAnswer'])
+            ->where('id', '\d+')
+            ->name('addCorrectAnswer');
+
+        Route::post('admin/questions/saveCorrectAnswer', [AdminQuestionsController::class, 'saveCorrectAnswer'])
+            ->name('saveCorrectAnswer');
+
+        Route::get('admin/themes/deleteTheme/{id}', [AdminThemesController::class, 'deleteTheme'])
+            ->where('id', '\d+')
+            ->name('deleteTheme');
+
+        Route::get('admin/questions/deleteQuest/{id}', [AdminQuestionsController::class, 'deleteQuest'])
+            ->where('id', '\d+')
+            ->name('deleteQuest');
+
+        Route::get('admin/messages/deleteMessage/{id}', [AdminMessagesController::class, 'deleteMessage'])
+            ->where('id', '\d+')
+            ->name('deleteMessage');
+
+        Route::get('admin/users/deleteUser/{id}', [AdminUsersController::class, 'deleteUser'])
+            ->where('id', '\d+')
+            ->name('deleteUser');
+
+        Route::get('admin/questions/thisThemeQuestions/{id}', [AdminQuestionsController::class, 'thisThemeQuestions'])
+            ->where('id', '\d+')
+            ->name('thisThemeQuestions');
+
+        Route::get('admin/questions/thisThemeAddQuest/{id}', [AdminQuestionsController::class, 'thisThemeAddQuest'])
+            ->where('id', '\d+')
+            ->name('thisThemeAddQuest');
+
+        Route::get('admin/adminAccount/{id}', [AdminController::class, 'adminAccount'])
+            ->where('id', '\d+')
+            ->name('adminAccount');
+
+        Route::get('admin/adminEdit/{id}', [AdminController::class, 'adminEdit'])
+            ->where('id', '\d+')
+            ->name('adminEdit');
+
+        Route::post('admin/adminUpdate/{id}', [AdminController::class, 'adminUpdate'])
+            ->where('id', '\d+')
+            ->name('adminUpdate');
+    });
+
+    /* маршрут на страницу профиля: account */
+    Route::resource('/account',AccountController::class);
 });
+
+/* тестовый маршрут: dashboard */
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})
+    ->middleware(['auth'])
+    ->name('dashboard');
+
+require __DIR__ . '/auth.php';
+
+Route::get('themes', [ThemeController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('themes');
+
+Route::get('completedThemes', [ThemeController::class, 'completedThemes'])
+    ->middleware(['auth'])
+    ->name('completedThemes');
+
+Route::get('/themes/show/{id}', [ThemeController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('themes.show');
+
+Route::get('/getQuest/{id}', [QuestController::class, 'getQuest'])
+    ->where('id', '\d+')
+    ->name('getQuest');
+
+Route::post('getNextQuest/{id}/{questNumber}', [QuestController::class, 'getNextQuest'])
+    ->where(['id' => '\d+', 'questNumber' => '\d+'])
+    ->name('getNextQuest');
+
+Route::resource('/message', MessageController::class);
+
+/* тестовый маршрут для удаления всех данных из сессии */
+Route::get('/clearSession', [QuestController::class, 'clearSession'])
+    ->name('clearSession');
+
+/* тестовый маршрут для просмотра данных в сессии */
+Route::get('/showSession', [QuestController::class, 'showSession'])
+    ->name('showSession');
+
+/* сохранение результатов: saveResult */
+Route::get('/saveResult', [QuestController::class, 'saveResult'])
+    ->name('saveResult');
+
+/* маршрут на страницу рейтинга: rating */
+Route::get('/rating', [RatingController::class, 'rating'])
+    ->name('rating');
+
+/* маршрут на страницу статистики: stats */
+Route::get('/stats', [StatsController::class, 'stats'])
+    ->middleware(['auth'])
+    ->name('stats');
+
+/* маршрут на страницу обратной связи */
+Route::get('/message', [MessageController::class, 'message'])
+    ->middleware(['auth'])
+    ->name('message');
+
+/* маршрут на страницу работы с обращением */
+Route::get('/userMessageEdit/{id}', [MessageController::class, 'userMessageEdit'])
+    ->middleware(['auth'])
+    ->where('id', '\d+')
+    ->name('userMessageEdit');
+
+/* маршрут для update message из аккаунта пользователя */
+Route::post('userMessageUpdate/{id}', [MessageController::class, 'userMessageUpdate'])
+    ->middleware(['auth'])
+    ->where('id', '\d+')
+    ->name('userMessageUpdate');
+
+/* рандомные темы(главная страница) */
+Route::get('/', [ThemeController::class, 'randomThemes'])
+    ->name('home');
